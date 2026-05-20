@@ -77,9 +77,20 @@ Before pushing:
 
 ## /edit feature
 
-`edit.html` + `edit-app.js` (frontend) + `functions/` (CF Pages Functions,
-runs server-side) provide a password-gated chat editor. Architecture in
+`edit.html` + `edit-app.js` (frontend) + `worker.js` (Cloudflare Worker main
+entry, routes `/api/*` to handlers in `functions/`) provide a password-gated
+chat editor. Architecture in
 [plan](../.claude/plans/review-repo-goofy-dongarra.md).
+
+**Deployment mode**: this is a **Cloudflare Worker with Static Assets** (not
+classic Pages Functions). `wrangler.jsonc` declares:
+- `main: "./worker.js"` — server-side request handler
+- `assets.directory: "."` + `.assetsignore` — everything else served as static
+- `assets.run_worker_first: ["/api/*"]` — `/api/*` always hits the Worker first
+
+When you add new server code, import it from `worker.js`. When you add new
+static files (images, HTML, CSS), they're auto-deployed unless listed in
+`.assetsignore`.
 
 ### Required CF Pages environment variables
 
