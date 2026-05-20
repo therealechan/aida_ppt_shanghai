@@ -1,0 +1,20 @@
+# Cloudflare Pages cache headers
+# fonts / images / video: hashed enough by filename, long cache
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+/uploads/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML / state / JS: short cache so agent pushes take effect quickly
+/index.html
+  Cache-Control: public, max-age=60, must-revalidate
+/.image-slots.state.json
+  Cache-Control: public, max-age=60, must-revalidate
+/deck-stage.js
+  Cache-Control: public, max-age=300, must-revalidate
+/image-slot.js
+  Cache-Control: public, max-age=300, must-revalidate
+/colors_and_type.css
+  Cache-Control: public, max-age=300, must-revalidate

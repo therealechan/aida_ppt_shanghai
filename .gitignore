@@ -1,0 +1,15 @@
+# bundler / standalone artifacts — never commit these back
+*-standalone.html
+*-Standalone.html
+* Standalone.html
+*.bundle-src.html
+
+# os / editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# dev artifacts
+*.pptx
+debug/
