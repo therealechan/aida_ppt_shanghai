@@ -1,0 +1,29 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; background: var(--bg-page); }
+  .card { padding: 24px; box-sizing: border-box; width: 700px; }
+  .card.dark { background: var(--ink-900); color: var(--fg-on-dark); }
+  .label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3); margin-bottom: 12px; }
+  .row { display: flex; gap: 8px; align-items: stretch; }
+  .swatch { flex: 1; height: 72px; border-radius: 10px; position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 8px; box-sizing: border-box; }
+  .swatch .name { font-size: 10px; font-family: var(--font-mono); color: rgba(255,255,255,0.95); text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+  .swatch.light .name { color: var(--ink-800); text-shadow: none; }
+  .hex { font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.8); position: absolute; top: 8px; left: 8px; }
+  .swatch.light .hex { color: var(--ink-600); }
+</style></head><body>
+<div class="card">
+  <div class="label">Brand — Bean Green Scale</div>
+  <div class="row">
+    <div class="swatch light" style="background:var(--bean-50)"><span class="hex">50</span><span class="name">#E6F9F0</span></div>
+    <div class="swatch light" style="background:var(--bean-100)"><span class="hex">100</span><span class="name">#C6F0DB</span></div>
+    <div class="swatch light" style="background:var(--bean-200)"><span class="hex">200</span><span class="name">#8FE3BC</span></div>
+    <div class="swatch" style="background:var(--bean-300)"><span class="hex">300</span><span class="name">#4FD199</span></div>
+    <div class="swatch" style="background:var(--bean-400)"><span class="hex">400</span><span class="name">#1FBC7F</span></div>
+    <div class="swatch" style="background:var(--bean-500); outline: 2px solid var(--ink-900); outline-offset: 2px;"><span class="hex">500 ★</span><span class="name">#06AA65</span></div>
+    <div class="swatch" style="background:var(--bean-600)"><span class="hex">600</span><span class="name">#039258</span></div>
+    <div class="swatch" style="background:var(--bean-700)"><span class="hex">700</span><span class="name">#02774A</span></div>
+    <div class="swatch" style="background:var(--bean-800)"><span class="hex">800</span><span class="name">#025E3B</span></div>
+    <div class="swatch" style="background:var(--bean-900)"><span class="hex">900</span><span class="name">#01442B</span></div>
+  </div>
+</div>
+</body></html>

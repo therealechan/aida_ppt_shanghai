@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; background: var(--bg-page); }
+  .card { padding: 28px; box-sizing: border-box; width: 700px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3); grid-column: span 2; margin-bottom: 0; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 13px; font-weight: 600; color: var(--fg-1); }
+  .input, .textarea, .select { font-family: var(--font-sans); font-size: 15px; padding: 12px 14px; border: 1px solid var(--border-1); border-radius: var(--radius-sm); background: #fff; color: var(--fg-1); outline: 0; transition: all var(--dur-fast); }
+  .input:focus, .textarea:focus, .select:focus { border-color: var(--bean-500); box-shadow: 0 0 0 3px var(--bean-100); }
+  .textarea { resize: vertical; min-height: 60px; }
+  .hint { font-size: 12px; color: var(--fg-3); }
+  .error { font-size: 12px; color: var(--danger); }
+  .input-error { border-color: var(--danger); }
+</style></head><body>
+<div class="card">
+  <div class="label">Form Inputs — Text, Textarea, Select, Error</div>
+  <div class="field"><label>Your name</label><input class="input" value="Zhang Wei"></div>
+  <div class="field"><label>Work email</label><input class="input" placeholder="you@company.com"><span class="hint">We reply within 1 business day.</span></div>
+  <div class="field" style="grid-column: span 2"><label>How can we help?</label><textarea class="textarea">We're launching in China and need a WeChat mini-program paired with a Shopify storefront.</textarea></div>
+  <div class="field"><label>Service</label><select class="select"><option>WeChat mini-program</option><option>Shopify solution</option><option>AI integration</option></select></div>
+  <div class="field"><label>Phone</label><input class="input input-error" value="020-342"><span class="error">Enter a full phone number.</span></div>
+</div>
+</body></html>

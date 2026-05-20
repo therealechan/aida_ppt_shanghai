@@ -1,0 +1,2262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>爱搭云 · GEO 时代的企业数字门户 — Beansmile 介绍</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css">
+<script src="deck-stage.js"></script>
+<script src="image-slot.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"></script>
+
+<style>
+  /* =================== Deck base =================== */
+  html, body { margin:0; padding:0; background:#0A0E10; color:var(--fg-1); }
+  deck-stage:not(:defined){ visibility:hidden; }
+
+  section {
+    box-sizing:border-box;
+    width:1920px; height:1080px;
+    background:var(--bg-page);
+    color:var(--fg-1);
+    padding:96px 128px;
+    display:flex; flex-direction:column;
+    position:relative; overflow:hidden;
+    font-family:var(--font-sans);
+  }
+  section[data-bg="dark"]    { background:var(--ink-900); color:var(--ink-0); }
+  section[data-bg="forest"]  { background:#0C1F17; color:var(--ink-0); }
+  section[data-bg="cream"]   { background:var(--ink-50); }
+  section[data-bg="bean"]    { background:var(--bean-500); color:var(--ink-0); }
+  section[data-bg="ink"]     { background:#0C1316; color:var(--ink-0); }
+
+  section[data-bg="dark"] h1,    section[data-bg="dark"] h2,    section[data-bg="dark"] h3,
+  section[data-bg="forest"] h1,  section[data-bg="forest"] h2,  section[data-bg="forest"] h3,
+  section[data-bg="bean"] h1,    section[data-bg="bean"] h2,    section[data-bg="bean"] h3,
+  section[data-bg="ink"] h1,     section[data-bg="ink"] h2,     section[data-bg="ink"] h3,
+  section[data-bg="dark"] .h-big,  section[data-bg="dark"] .h-1,  section[data-bg="dark"] .h-2,  section[data-bg="dark"] .h-3,  section[data-bg="dark"] .display,
+  section[data-bg="forest"] .h-big,section[data-bg="forest"] .h-1,section[data-bg="forest"] .h-2,section[data-bg="forest"] .h-3,section[data-bg="forest"] .display,
+  section[data-bg="bean"]   .h-big,section[data-bg="bean"]   .h-1,section[data-bg="bean"]   .h-2,section[data-bg="bean"]   .h-3,section[data-bg="bean"]   .display,
+  section[data-bg="ink"]    .h-big,section[data-bg="ink"]    .h-1,section[data-bg="ink"]    .h-2,section[data-bg="ink"]    .h-3,section[data-bg="ink"]    .display { color:#fff; }
+
+  /* =================== Chrome =================== */
+  .topbar {
+    position:absolute; top:48px; left:128px; right:128px;
+    display:flex; align-items:center; justify-content:space-between;
+    font-size:14px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--fg-3);
+  }
+  section[data-bg="dark"] .topbar,
+  section[data-bg="forest"] .topbar,
+  section[data-bg="bean"]   .topbar,
+  section[data-bg="ink"]    .topbar { color:rgba(255,255,255,0.55); }
+
+  .topbar .left { display:flex; align-items:center; gap:14px; font-weight:600; }
+  .topbar .dot  { width:8px; height:8px; border-radius:50%; background:var(--bean-500); display:inline-block; }
+  .topbar .right { font-weight:500; }
+
+  .pagenum {
+    position:absolute; bottom:48px; right:128px;
+    font-family:var(--font-mono); font-size:14px;
+    color:var(--fg-4);
+  }
+  section[data-bg="dark"] .pagenum,
+  section[data-bg="forest"] .pagenum,
+  section[data-bg="bean"]   .pagenum,
+  section[data-bg="ink"]    .pagenum { color:rgba(255,255,255,0.45); }
+
+  .footnote {
+    position:absolute; bottom:48px; left:128px;
+    font-size:14px; color:var(--fg-3);
+    letter-spacing:0.04em; max-width:1400px;
+  }
+  section[data-bg="dark"] .footnote,
+  section[data-bg="forest"] .footnote,
+  section[data-bg="bean"]   .footnote,
+  section[data-bg="ink"]    .footnote { color:rgba(255,255,255,0.5); }
+
+  /* =================== Type =================== */
+  .eyebrow {
+    font-size:14px; font-weight:600;
+    letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--bean-600);
+  }
+  section[data-bg="dark"] .eyebrow,
+  section[data-bg="forest"] .eyebrow,
+  section[data-bg="ink"]    .eyebrow { color:var(--bean-300); }
+  section[data-bg="bean"]   .eyebrow { color:rgba(255,255,255,0.85); }
+
+  .display { font-size:140px; font-weight:800; line-height:0.98; letter-spacing:-0.035em; margin:0; }
+  .h-big   { font-size:104px; font-weight:800; line-height:1.02; letter-spacing:-0.03em; margin:0; }
+  .h-1     { font-size:80px;  font-weight:800; line-height:1.05; letter-spacing:-0.03em; margin:0; }
+  .h-2     { font-size:56px;  font-weight:700; line-height:1.1;  letter-spacing:-0.025em; margin:0; }
+  .h-3     { font-size:36px;  font-weight:600; line-height:1.2;  letter-spacing:-0.015em; margin:0; }
+  .lead    { font-size:28px; line-height:1.45; color:var(--fg-2); max-width:1300px; margin:0; }
+  section[data-bg="dark"] .lead,
+  section[data-bg="forest"] .lead,
+  section[data-bg="ink"]    .lead { color:rgba(255,255,255,0.78); }
+  section[data-bg="bean"]   .lead { color:rgba(255,255,255,0.95); }
+  .small { font-size:18px; line-height:1.5; color:var(--fg-3); }
+  section[data-bg="dark"] .small,
+  section[data-bg="forest"] .small,
+  section[data-bg="ink"]    .small { color:rgba(255,255,255,0.6); }
+
+  em.bean { font-style:normal; color:var(--bean-500); }
+  section[data-bg="dark"] em.bean,
+  section[data-bg="forest"] em.bean,
+  section[data-bg="ink"]    em.bean { color:var(--bean-300); }
+
+  .mono { font-family:var(--font-mono); }
+  .rule { width:64px; height:4px; background:var(--bean-500); border-radius:2px; }
+
+  /* =================== Layout =================== */
+  .stack { display:flex; flex-direction:column; }
+  .row   { display:flex; }
+  .grow  { flex:1; }
+  .center{ align-items:center; justify-content:center; }
+  .gap-2{gap:8px} .gap-3{gap:12px} .gap-4{gap:16px} .gap-5{gap:24px}
+  .gap-6{gap:32px} .gap-7{gap:48px} .gap-8{gap:64px} .gap-9{gap:96px}
+
+  /* =================== Cards =================== */
+  .card {
+    background:#fff; border:1px solid var(--ink-200);
+    border-radius:24px; padding:48px;
+    box-shadow:var(--shadow-sm);
+  }
+  section[data-bg="dark"] .card,
+  section[data-bg="forest"] .card,
+  section[data-bg="ink"] .card {
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    box-shadow:none;
+  }
+  .card.flat { box-shadow:none; }
+
+  /* Client logo cards */
+  .client-logo {
+    aspect-ratio: 16/9;
+    display: flex; align-items: center; justify-content: center;
+    padding: 18px 22px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .client-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto; height: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .chip {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:8px 16px; border-radius:999px;
+    background:var(--bean-50); color:var(--bean-700);
+    font-size:15px; font-weight:600; letter-spacing:0.02em;
+    border:1px solid var(--bean-100);
+  }
+  section[data-bg="dark"] .chip,
+  section[data-bg="forest"] .chip,
+  section[data-bg="ink"]    .chip {
+    background:rgba(6,170,101,0.14); color:var(--bean-300);
+    border-color:rgba(6,170,101,0.28);
+  }
+  .chip.tag {
+    background:transparent; color:var(--fg-3);
+    border-color:var(--ink-200);
+    text-transform:uppercase; letter-spacing:0.12em; font-size:13px; padding:6px 12px;
+  }
+  section[data-bg="dark"] .chip.tag,
+  section[data-bg="forest"] .chip.tag,
+  section[data-bg="ink"]    .chip.tag {
+    color:rgba(255,255,255,0.55); border-color:rgba(255,255,255,0.18);
+  }
+
+  /* =================== Logo lockup =================== */
+  .lockup { display:flex; align-items:center; gap:18px; }
+  .lockup .word { height:38px; }
+  section[data-bg="forest"] .lockup .word,
+  section[data-bg="dark"]   .lockup .word,
+  section[data-bg="bean"]   .lockup .word,
+  section[data-bg="ink"]    .lockup .word { filter:invert(1) brightness(2); }
+
+  /* =================== Co-brand partner lockup =================== */
+  .partner-lockup {
+    display:flex; align-items:center; gap:14px;
+  }
+  .partner-lockup .pl-tile {
+    background:#fff;
+    padding: 8px 14px;
+    border-radius:10px;
+    display:flex; align-items:center;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  }
+  .partner-lockup .pl-tile img { height: 28px; display:block; }
+  .partner-lockup .pl-x {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0.45;
+  }
+
+  /* =================== Stat number =================== */
+  .stat-num {
+    font-family:var(--font-display);
+    font-size:160px; font-weight:800;
+    line-height:1; letter-spacing:-0.04em;
+    color:var(--bean-500);
+  }
+  section[data-bg="forest"] .stat-num,
+  section[data-bg="dark"]   .stat-num,
+  section[data-bg="ink"]    .stat-num { color:var(--bean-300); }
+
+  /* =================== Misc =================== */
+  .divider-v { width:1px; align-self:stretch; background:var(--ink-200); }
+  section[data-bg="dark"] .divider-v,
+  section[data-bg="forest"] .divider-v,
+  section[data-bg="ink"]    .divider-v { background:rgba(255,255,255,0.12); }
+
+  /* =================== Video opener =================== */
+  .video-frame {
+    position:relative;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    background: linear-gradient(135deg, #0C1F17 0%, #0C1316 50%, #023f29 100%);
+    border-radius: 20px;
+    overflow:hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+  .video-frame::before {
+    content:'';
+    position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 30% 70%, rgba(6,170,101,0.18), transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(6,170,101,0.10), transparent 40%);
+  }
+  .video-stripes {
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(135deg,
+        rgba(255,255,255,0.025) 0,
+        rgba(255,255,255,0.025) 2px,
+        transparent 2px,
+        transparent 16px);
+  }
+  .video-play {
+    position:absolute; top:50%; left:50%;
+    transform: translate(-50%,-50%);
+    width:160px; height:160px;
+    border-radius:50%;
+    background: var(--bean-500);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 20px 60px rgba(6,170,101,0.45);
+  }
+  .video-play::after {
+    content:'';
+    width:0; height:0;
+    border-left: 50px solid #fff;
+    border-top: 32px solid transparent;
+    border-bottom: 32px solid transparent;
+    margin-left: 14px;
+  }
+  .video-caption {
+    position:absolute; bottom:32px; left:40px; right:40px;
+    display:flex; justify-content:space-between; align-items:flex-end;
+    color:#fff;
+  }
+  .video-caption .ttl { font-size:32px; font-weight:700; letter-spacing:-0.02em; }
+  .video-caption .sub { font-family:var(--font-mono); font-size:14px; letter-spacing:0.12em; color:rgba(255,255,255,0.55); text-transform:uppercase; }
+
+  /* =================== Photo slot =================== */
+  .photo-slot {
+    background: var(--ink-100);
+    background-image:
+      repeating-linear-gradient(135deg,
+        rgba(0,0,0,0.04) 0,
+        rgba(0,0,0,0.04) 2px,
+        transparent 2px, transparent 14px);
+    border-radius: 20px;
+    border: 1px solid var(--ink-200);
+    position:relative;
+    overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+    color: var(--fg-4);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  section[data-bg="dark"] .photo-slot,
+  section[data-bg="forest"] .photo-slot,
+  section[data-bg="ink"]    .photo-slot {
+    background-color: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.45);
+    background-image:
+      repeating-linear-gradient(135deg,
+        rgba(255,255,255,0.04) 0,
+        rgba(255,255,255,0.04) 2px,
+        transparent 2px, transparent 14px);
+  }
+
+  /* =================== Map visual =================== */  .map-wrap { width: 100%; height: 560px; position: relative; }
+  .map-wrap .jvm-zoom-btn { display:none; }
+  .map-wrap .jvm-tooltip { display:none; } /* labels are always shown now */
+  .map-wrap .jvm-marker-label {
+    paint-order: stroke;
+    stroke: rgba(12,31,23,0.92);
+    stroke-width: 4px;
+    stroke-linejoin: round;
+    fill: #fff;
+    font-family: var(--font-mono), 'Input Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    pointer-events: none;
+  }
+
+  /* =================== Pricing row =================== */
+  .price-row {
+    display:flex; align-items:baseline; justify-content:space-between;
+    padding:14px 0;
+    border-top:1px solid var(--ink-100);
+    gap:24px;
+  }
+  .price-row:first-child { border-top:none; }
+  .price-row .pr-name { font-size:19px; font-weight:600; color:var(--fg-1); flex:0 0 auto; line-height:1.3; }
+  .price-row .pr-desc { font-size:14px; color:var(--fg-3); flex:1; line-height:1.35; margin-top:2px; }
+  .price-row .pr-num  { font-family:var(--font-mono); font-size:22px; font-weight:700; color:var(--fg-1); white-space:nowrap; }
+
+  /* =================== Timeline =================== */
+  .tl-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:20px; }
+  .tl-card {
+    border:1px solid rgba(255,255,255,0.10);
+    background:rgba(255,255,255,0.04);
+    border-radius:18px; padding:32px;
+    display:flex; flex-direction:column; gap:14px;
+    min-height:340px;
+  }
+  .tl-card .week  { font-family:var(--font-mono); font-size:13px; color:var(--bean-300); letter-spacing:0.15em; }
+  .tl-card .ttl   { font-size:24px; font-weight:700; color:#fff; line-height:1.2; }
+  .tl-card .body  { font-size:16px; color:rgba(255,255,255,0.65); line-height:1.6; }
+  .tl-card.now    { background:var(--bean-500); border-color:transparent; }
+  .tl-card.now .week, .tl-card.now .body { color:rgba(255,255,255,0.95); }
+
+  /* =================== Headline accent =================== */
+  em.underline {
+    font-style:normal;
+    color: var(--bean-600);
+    font-weight: 800;
+  }
+  section[data-bg="dark"] em.underline,
+  section[data-bg="forest"] em.underline,
+  section[data-bg="ink"] em.underline { color: var(--bean-300); }
+  section[data-bg="bean"] em.underline {
+    color:#fff;
+    background: rgba(255,255,255,0.18);
+    padding: 0.08em 0.18em;
+    border-radius: 0.14em;
+    display: inline-block;
+    line-height: 1;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  /* Inline emphasis — replaces the old <u> underline.
+     Bold + brand color, no underline overlap problems. */
+  u {
+    text-decoration: none;
+    font-weight: 700;
+    color: var(--bean-600);
+  }
+  section[data-bg="dark"] u,
+  section[data-bg="forest"] u,
+  section[data-bg="ink"] u { color: var(--bean-300); }
+  section[data-bg="bean"] u { color: #fff; font-weight: 700; }
+
+  /* =================== Agent flow (Slide 19) =================== */
+  .agent-flow {
+    display:grid;
+    grid-template-columns: 1fr 64px 1.85fr 64px 1fr;
+    gap: 20px;
+    align-items: stretch;
+  }
+  .flow-col { display:flex; flex-direction:column; gap:18px; }
+  .flow-col.agents { gap:14px; }
+  .flow-label {
+    font-family: var(--font-mono); font-size:12px;
+    letter-spacing:0.16em; color:var(--fg-4);
+    text-transform:uppercase;
+  }
+  .flow-card {
+    background:#fff; border:1px solid var(--ink-200);
+    border-radius:20px; padding:24px 22px;
+    box-shadow:var(--shadow-sm);
+    flex:1;
+  }
+  .flow-card .material {
+    font-size:20px; font-weight:600; color:var(--fg-1);
+    padding:14px 18px;
+    border:1px dashed var(--ink-200);
+    border-radius:12px;
+    background:#fafaf7;
+    line-height:1.2;
+  }
+  .flow-card .material.muted {
+    color:var(--fg-4); border-style:dotted; text-align:center;
+    font-family:var(--font-mono); letter-spacing:0.2em;
+  }
+  .flow-card.out { background:var(--bean-50); border-color:var(--bean-100); }
+  .flow-card .material.bean {
+    border:1px solid var(--bean-200);
+    background:#fff;
+    color:var(--bean-900);
+  }
+  .flow-note {
+    font-family:var(--font-mono); font-size:13px;
+    color:var(--fg-3); letter-spacing:0.04em; line-height:1.55;
+    text-align:center;
+  }
+  .flow-arrow {
+    width:64px; height:48px;
+    color:var(--bean-500);
+    align-self:center;
+    justify-self:center;
+  }
+  .agent-grid {
+    display:grid; grid-template-columns: 1fr 1fr; gap:14px;
+    background:var(--ink-900);
+    border-radius:20px;
+    padding:22px;
+    flex:1;
+    position:relative;
+  }
+  .agent-grid::before {
+    content:''; position:absolute; inset:0; border-radius:20px;
+    background:
+      radial-gradient(circle at 20% 0%, rgba(6,170,101,0.12), transparent 50%),
+      radial-gradient(circle at 90% 100%, rgba(6,170,101,0.08), transparent 45%);
+    pointer-events:none;
+  }
+  .agent-chip {
+    display:flex; align-items:center; gap:16px;
+    padding:16px 18px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.10);
+    border-radius:14px;
+    position:relative;
+  }
+  .agent-chip.wide { grid-column: 1 / -1; }
+  .agent-chip .num {
+    font-family:var(--font-mono); font-size:13px;
+    color:var(--bean-300); letter-spacing:0.08em;
+    font-weight:700; min-width:22px;
+  }
+  .agent-chip .meta { display:flex; flex-direction:column; gap:3px; }
+  .agent-chip .t { font-size:18px; font-weight:700; color:#fff; line-height:1.2; letter-spacing:-0.005em; }
+  .agent-chip .s { font-size:13px; color:rgba(255,255,255,0.62); line-height:1.4; }
+
+  /* =================== AI Portfolio (Slide 08) =================== */
+  .ai-grid {
+    display:grid;
+    grid-template-columns: 1.55fr 1fr;
+    gap: 22px;
+    align-items: stretch;
+  }
+  .ai-card {
+    background:#fff; border:1px solid var(--ink-200);
+    border-radius: 22px; overflow:hidden;
+    box-shadow: var(--shadow-sm);
+    position:relative;
+    display:flex; flex-direction:column;
+  }
+
+  /* ----- Mac-style browser window (used for all screenshots) ----- */
+  .winshot {
+    background:#fff;
+    border-radius: 10px;
+    overflow:hidden;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+    display:flex; flex-direction:column;
+    flex:1; min-height:0;
+  }
+  .winshot .bar {
+    background: linear-gradient(180deg, #efefec 0%, #e6e5e1 100%);
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    height: 26px;
+    display:flex; align-items:center; gap:6px;
+    padding: 0 12px;
+    flex-shrink:0;
+  }
+  .winshot .bar .dot { width:10px; height:10px; border-radius:50%; }
+  .winshot .bar .dot.r { background:#ff5f57; }
+  .winshot .bar .dot.y { background:#ffbd2e; }
+  .winshot .bar .dot.g { background:#28c840; }
+  .winshot .bar .url {
+    margin-left: 22px; margin-right: auto;
+    padding: 2px 14px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 5px;
+    font-family: var(--font-mono); font-size: 11px;
+    color:#888; letter-spacing:0.02em;
+    min-width: 180px; text-align: center;
+  }
+  .winshot .scr {
+    flex:1; min-height:0;
+    background: #f5f5f2;
+    overflow:hidden; position:relative;
+  }
+  .winshot .scr img {
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit: cover; object-position: top center;
+    display:block;
+  }
+
+  /* ----- Featured aida card ----- */
+  .ai-card.featured {
+    background: linear-gradient(180deg, #0E261C 0%, #06140E 100%);
+    border-color: transparent;
+    color:#fff;
+    padding: 28px 30px 28px;
+    gap: 18px;
+  }
+  .ai-card.featured::before {
+    content:''; position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 95% 4%, rgba(6,170,101,0.24), transparent 48%),
+      radial-gradient(circle at 0% 100%, rgba(6,170,101,0.10), transparent 50%);
+    pointer-events:none;
+  }
+  .ai-card.featured > * { position:relative; z-index:1; }
+
+  .featured-head {
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px;
+  }
+  .today-badge {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:7px 14px;
+    background: var(--bean-500); color:#fff;
+    border-radius: 999px;
+    font-size:13px; font-weight:700; letter-spacing:0.14em;
+    text-transform:uppercase;
+  }
+  .today-badge::before {
+    content:''; width:7px; height:7px; border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 0 4px rgba(255,255,255,0.18);
+  }
+  .featured-domain {
+    font-family: var(--font-mono); font-size:15px;
+    letter-spacing:0.10em; color: rgba(255,255,255,0.55);
+  }
+
+  .featured-title {
+    display:flex; align-items:flex-end; gap:18px; flex-wrap:wrap;
+  }
+  .featured-title h3 {
+    margin:0;
+    font-size: 58px; font-weight:800;
+    line-height:1.0; letter-spacing:-0.025em;
+    color:#fff;
+  }
+  .featured-title .sub {
+    font-family: var(--font-mono);
+    font-size:15px; letter-spacing:0.10em;
+    color: rgba(255,255,255,0.55);
+    padding-bottom: 4px;
+  }
+  .featured-desc {
+    margin:0;
+    font-size:17px; line-height:1.55;
+    color: rgba(255,255,255,0.78);
+    max-width: 820px;
+  }
+  .featured-tags { display:flex; flex-wrap:wrap; gap:8px; }
+  .featured-tags .tag {
+    padding:6px 12px;
+    border-radius:8px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.14);
+    color: rgba(255,255,255,0.80);
+    font-size:13px; font-weight:500; letter-spacing:0.02em;
+  }
+
+  /* ----- Right column: 3 side cards stacked ----- */
+  .ai-side {
+    display:grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 18px;
+  }
+  .side-card {
+    background:#fff; border:1px solid var(--ink-200);
+    border-radius: 18px; overflow:hidden;
+    display:grid; grid-template-columns: 1.05fr 1fr;
+    align-items:stretch;
+    box-shadow: var(--shadow-sm);
+    position:relative;
+  }
+  .side-card .winshot {
+    border-radius:0;
+    box-shadow:none;
+    margin: 14px 0 14px 14px;
+    border-radius: 8px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.10);
+  }
+  .side-card .body {
+    padding: 18px 22px 18px 22px;
+    display:flex; flex-direction:column; gap:5px;
+    justify-content:center;
+  }
+  .side-card .body .domain {
+    font-family: var(--font-mono); font-size:12px;
+    color: var(--bean-600); letter-spacing:0.10em;
+  }
+  .side-card .body .name {
+    margin:0; font-size: 24px; font-weight:700;
+    color: var(--fg-1); letter-spacing:-0.015em; line-height:1.15;
+  }
+  .side-card .body .desc {
+    margin:2px 0 0; font-size: 13.5px; line-height: 1.55;
+    color: var(--fg-2);
+  }
+</style>
+</head>
+<body>
+
+<template id="__bundler_thumbnail" data-bg-color="#06AA65">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#06AA65"/>
+    <g transform="translate(600 380)" fill="#fff" text-anchor="middle" font-family="-apple-system, system-ui, sans-serif" font-weight="800">
+      <text font-size="220" letter-spacing="-8">aida</text>
+      <text y="120" font-size="58" letter-spacing="14" opacity="0.85">GEO · BEANSMILE</text>
+    </g>
+    <circle cx="600" cy="180" r="48" fill="#fff" opacity="0.95"/>
+    <path d="M576 198 L600 156 L624 198 L612 198 L612 220 L588 220 L588 198 Z" fill="#06AA65"/>
+  </svg>
+</template>
+
+<deck-stage width="1920" height="1080" style="--deck-rail-w: 188px;">
+
+  <!-- =========================================================
+  SLIDE 01 — COVER
+  ========================================================= -->
+  <section data-screen-label="01 封面" data-bg="forest">
+    <div class="topbar" style="align-items:center;">
+      <div class="partner-lockup">
+        <div class="pl-tile"><img src="assets/beansmile-wordmark.png" alt="Beansmile"></div>
+        <span class="pl-x">×</span>
+        <div class="pl-tile"><img src="assets/jianzhong-logo.png" alt="建众智业"></div>
+      </div>
+      <div class="right">KEYNOTE · 2026</div>
+    </div>
+
+    <div class="stack grow" style="justify-content:center; gap:48px;">
+      <div class="eyebrow">KEYNOTE · GEO INFRASTRUCTURE</div>
+      <h1 class="display" style="max-width:1600px;">
+        AI 时代的<br>
+        品牌曝光基建<br>
+        <em class="bean">让 AI 主动推荐你</em>
+      </h1>
+      <div class="rule"></div>
+      <p class="lead" style="max-width:1200px;">
+        Beansmile / 乐豆信息 × 爱搭云 aida.yun。<br>
+        从公司与个人，到 GEO 是什么、问题在哪，再到我们怎么帮你解决。
+      </p>
+    </div>
+
+    <div class="footnote">Beansmile · Deliver the best.</div>
+    <div class="pagenum">01 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 02 — PART 1 DIVIDER · ABOUT
+  ========================================================= -->
+  <section data-screen-label="02 Part 1 封面" data-bg="cream">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> Part One</div>
+      <div class="right">About Beansmile / Du Ligang</div>
+    </div>
+
+    <div class="stack grow" style="justify-content:center; gap:40px;">
+      <div class="mono" style="font-size:24px; color:var(--fg-3); letter-spacing:0.08em;">PART 01 — WHO WE ARE</div>
+      <h1 class="display" style="font-size:150px; line-height:1.12;">
+        十三年，<br>
+        一支<em class="bean">穿越周期</em><br>的团队
+      </h1>
+      <p class="lead" style="font-size:30px;">
+        从 Web 1.0 到 AI 时代 — 我们沉淀出对互联网产品的系统性认知。
+      </p>
+    </div>
+
+    <div class="footnote">Beansmile / 乐豆信息 · 创立于 2013 年广州</div>
+    <div class="pagenum">02 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 03 — BEANSMILE · 13 YEARS · ERAS
+  ========================================================= -->
+  <section data-screen-label="03 13 年技术沉淀">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 乐豆信息 · Beansmile</div>
+      <div class="right">Part 1 · 01</div>
+    </div>
+
+    <div class="row gap-9 grow" style="align-items:center;">
+      <div class="stack gap-5" style="flex:1.1;">
+        <div class="eyebrow">SINCE 2013 · FOUNDED IN GUANGZHOU</div>
+        <h1 class="h-big">
+          <span style="color:var(--bean-500);">13 年</span><br>
+          技术沉淀<br>
+          穿越<em class="bean">三个时代</em>
+        </h1>
+        <p class="lead">
+          一支技术团队，从移动互联网，到小程序 / 企业服务，<br>
+          再到 AI 时代——每一次浪潮都没有缺席。
+        </p>
+      </div>
+
+      <!-- Era timeline -->
+      <div class="stack gap-5" style="flex:1;">
+        <div class="card stack gap-3">
+          <div class="row" style="justify-content:space-between; align-items:baseline;">
+            <div class="mono" style="font-size:14px; color:var(--fg-4); letter-spacing:0.12em;">2013 — 2018</div>
+            <div class="chip tag">ERA 01</div>
+          </div>
+          <div class="h-3">移动互联网时代</div>
+          <div class="small">App / Web / 跨境电商 — 把中国能力带向海外。</div>
+        </div>
+        <div class="card stack gap-3" style="background:var(--bean-50); border-color:var(--bean-100);">
+          <div class="row" style="justify-content:space-between; align-items:baseline;">
+            <div class="mono" style="font-size:14px; color:var(--bean-700); letter-spacing:0.12em;">2018 — 2023</div>
+            <div class="chip tag" style="border-color:var(--bean-200); color:var(--bean-700);">ERA 02</div>
+          </div>
+          <div class="h-3" style="color:var(--bean-900);">小程序 / 企业服务时代</div>
+          <div class="small" style="color:var(--bean-800);">微信生态 / SaaS / 企业级数字门户。</div>
+        </div>
+        <div class="card stack gap-3" style="background:var(--ink-900); color:#fff; border-color:transparent;">
+          <div class="row" style="justify-content:space-between; align-items:baseline;">
+            <div class="mono" style="font-size:14px; color:var(--bean-300); letter-spacing:0.12em;">2023 — NOW</div>
+            <div class="chip tag" style="color:rgba(255,255,255,0.6); border-color:rgba(255,255,255,0.18);">ERA 03</div>
+          </div>
+          <div class="h-3" style="color:#fff;">AI 时代</div>
+          <div class="small" style="color:rgba(255,255,255,0.7);">GEO 基建 / AI Agent / 爱搭云 · clawme.ai。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">从被搜索到被推荐——团队的认知，跟着入口一起在升级。</div>
+    <div class="pagenum">03 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 04 — 11 COUNTRIES
+  ========================================================= -->
+  <section data-screen-label="04 11 个国家" data-bg="forest">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 全球交付足迹</div>
+      <div class="right">Part 1 · 02</div>
+    </div>
+
+    <div class="stack gap-5">
+      <div class="eyebrow">GLOBAL DELIVERY · 11 COUNTRIES</div>
+      <h2 class="h-2" style="max-width:1500px;">
+        在 <em class="bean">11 个国家</em>，我们交付过<u>面向真实海外买家</u>的官网与业务系统
+      </h2>
+    </div>
+
+    <div class="row gap-7" style="margin-top:48px; align-items:center;">
+      <div class="stack" style="flex:1; gap:28px;">
+        <div class="row" style="align-items:flex-end; gap:24px;">
+          <div class="stat-num">11</div>
+          <div class="stack" style="padding-bottom:18px;">
+            <div class="h-3" style="font-weight:600;">交付国家</div>
+            <div class="small">东亚 / 欧洲 / 北美 / 非洲 / 澳洲</div>
+          </div>
+        </div>
+        <div class="row" style="align-items:flex-end; gap:24px;">
+          <div class="stat-num">9</div>
+          <div class="stack" style="padding-bottom:18px;">
+            <div class="h-3" style="font-weight:600;">语言版本</div>
+            <div class="small">中 / 英 / 德 / 阿 / 西 / 日 / 法 / 葡 / 韩</div>
+          </div>
+        </div>
+        <div class="row" style="align-items:flex-end; gap:24px;">
+          <div class="stat-num">8</div>
+          <div class="stack" style="padding-bottom:18px;">
+            <div class="h-3" style="font-weight:600;">行业覆盖</div>
+            <div class="small">科技 / 电商 / 出行 / 金融 / 内容 等</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real vector world map (jsvectormap) -->
+      <div style="flex:1.3; position:relative;">
+        <div id="world-map" class="map-wrap"></div>
+      </div>
+    </div>
+
+    <div class="footnote">语言、合规、时区、支付场景——都踩过坑、留有手册。</div>
+    <div class="pagenum">04 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 05 — FOUNDER 杜立刚
+  ========================================================= -->
+  <section data-screen-label="05 创始人 杜立刚">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> Founder · 杜立刚</div>
+      <div class="right">Part 1 · 03</div>
+    </div>
+
+    <div class="row gap-9 grow" style="align-items:center;">
+      <!-- Portrait photo -->
+      <div style="flex:1; max-width:560px;">
+        <img src="assets/leon-avatar.jpg" alt="杜立刚 Du Ligang"
+             style="width:520px; height:640px; object-fit:cover; object-position:center 22%; border-radius:24px; display:block; box-shadow:var(--shadow-md);">
+      </div>
+
+      <div class="stack gap-6" style="flex:1.3;">
+        <div class="eyebrow">FOUNDER · DU LIGANG · 杜立刚</div>
+        <h1 class="h-big" style="font-size:96px;">
+          20+ 年<br>
+          技术老兵，<br>
+          <em class="bean">把网站做对的人</em>
+        </h1>
+
+        <div class="stack gap-5" style="margin-top:16px;">
+          <div class="row gap-5" style="align-items:baseline;">
+            <div class="mono" style="font-size:14px; color:var(--bean-600); letter-spacing:0.14em; min-width:120px;">行业资历</div>
+            <div style="font-size:20px; line-height:1.55; color:var(--fg-1); flex:1;">2013 年创立乐豆信息(Beansmile)，深耕企业级数字门户与小程序生态。</div>
+          </div>
+          <div class="row gap-5" style="align-items:baseline;">
+            <div class="mono" style="font-size:14px; color:var(--bean-600); letter-spacing:0.14em; min-width:120px;">技术认知</div>
+            <div style="font-size:20px; line-height:1.55; color:var(--fg-1); flex:1;">见证 Web / Mobile / 小程序 / AI 四代变迁，持续在生产环境中迭代。</div>
+          </div>
+          <div class="row gap-5" style="align-items:baseline;">
+            <div class="mono" style="font-size:14px; color:var(--bean-600); letter-spacing:0.14em; min-width:120px;">演讲分享</div>
+            <div style="font-size:20px; line-height:1.55; color:var(--fg-1); flex:1;">微信公开课特邀讲师 · 多场行业论坛主题分享嘉宾。</div>
+          </div>
+        </div>
+
+        <div class="chip" style="align-self:flex-start; margin-top:8px;">→ 用 13 年的积累，做企业出海的 AI 基建</div>
+      </div>
+    </div>
+
+    <div class="pagenum">05 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 06 — BRAND CLIENTS
+  ========================================================= -->
+  <section data-screen-label="06 品牌客户" data-bg="cream">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 服务过的品牌客户</div>
+      <div class="right">Part 1 · 04</div>
+    </div>
+
+    <div class="stack gap-5">
+      <div class="eyebrow">BRAND CLIENTS · PARTIAL LIST</div>
+      <h2 class="h-1" style="max-width:1500px;">
+        从<em class="bean">头部品牌</em>到<em class="bean">上市公司</em>，<br>
+        我们用产品质量赢得复购
+      </h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(6, 1fr); gap:20px; margin-top:56px;">
+      <div class="card client-logo"><img src="assets/clients/01-google.png" alt="Google"></div>
+      <div class="card client-logo"><img src="assets/clients/02-wechat.png" alt="WeChat"></div>
+      <div class="card client-logo"><img src="assets/clients/03-nba.png" alt="NBA"></div>
+      <div class="card client-logo"><img src="assets/clients/04-bytedance.png" alt="ByteDance / 字节跳动"></div>
+      <div class="card client-logo"><img src="assets/clients/05-ebest.png" alt="eBest"></div>
+      <div class="card client-logo"><img src="assets/clients/06-meadjohnson.png" alt="Mead Johnson / 美赞臣"></div>
+      <div class="card client-logo"><img src="assets/clients/07-tokyochuo.png" alt="Tokyo Chuo Auction"></div>
+      <div class="card client-logo"><img src="assets/clients/08-frescobaldi.png" alt="Frescobaldi Toscana"></div>
+      <div class="card client-logo"><img src="assets/clients/09-dji.png" alt="DJI"></div>
+      <div class="card client-logo"><img src="assets/clients/10-visa.png" alt="Visa"></div>
+      <div class="card client-logo"><img src="assets/clients/11-calvinklein.png" alt="Calvin Klein"></div>
+      <div class="card client-logo"><img src="assets/clients/12-sixt.png" alt="Sixt"></div>
+    </div>
+
+    <div class="row gap-3" style="margin-top:40px;">
+      <span class="chip tag">科技</span>
+      <span class="chip tag">电商</span>
+      <span class="chip tag">出行</span>
+      <span class="chip tag">金融</span>
+      <span class="chip tag">内容</span>
+      <span class="chip tag">教育</span>
+      <span class="chip tag">汽车</span>
+    </div>
+
+    <div class="footnote">12 个代表性 logo · 完整客户列表可在汇报后展开。</div>
+    <div class="pagenum">06 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 07 — THREE HONORS
+  ========================================================= -->
+  <section data-screen-label="07 三大荣誉">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 行业认可与官方合作</div>
+      <div class="right">Part 1 · 05</div>
+    </div>
+
+    <div class="stack gap-5">
+      <div class="eyebrow">HONORS &amp; RECOGNITION</div>
+      <h2 class="h-1" style="max-width:1500px;">
+        不是自夸，<em class="bean">行业说了算</em>
+      </h2>
+      <p class="lead" style="margin-top:8px;">
+        从微信生态比赛冠军，到 Google 官方合作伙伴 — 我们的技术能力被同行与平台<u>双重认证</u>。
+      </p>
+    </div>
+
+    <div class="row gap-6 grow" style="margin-top:56px; align-items:stretch;">
+      <div class="card stack gap-4" style="flex:1;">
+        <div class="row" style="justify-content:space-between; align-items:flex-start;">
+          <div class="mono" style="font-size:72px; font-weight:800; color:var(--bean-500); letter-spacing:-0.04em; line-height:1;">01</div>
+          <div class="chip tag">WeChat × Berlin</div>
+        </div>
+        <h3 class="h-3">微信开发者大赛<br>柏林分站 <em class="bean">2 个分组冠军</em></h3>
+        <p style="font-size:18px; line-height:1.55; color:var(--fg-2);">
+          微信官方在欧洲举办的开发者大赛 — 同场拿下两个分组冠军。<br>
+          技术能力被腾讯生态在海外现场认证。
+        </p>
+      </div>
+
+      <div class="card stack gap-4" style="flex:1; background:var(--bean-50); border-color:var(--bean-100);">
+        <div class="row" style="justify-content:space-between; align-items:flex-start;">
+          <div class="mono" style="font-size:72px; font-weight:800; color:var(--bean-600); letter-spacing:-0.04em; line-height:1;">02</div>
+          <div class="chip tag" style="border-color:var(--bean-200); color:var(--bean-700);">Open Class</div>
+        </div>
+        <h3 class="h-3">跨境微信公开课<br><em class="bean">特邀讲师</em></h3>
+        <p style="font-size:18px; line-height:1.55; color:var(--fg-2);">
+          演讲主题：<strong>"让海外传统 IT 系统『中国游客友好化』"</strong>。<br>
+          把跨境技术经验沉淀为公开方法论。
+        </p>
+      </div>
+
+      <div class="card stack gap-4" style="flex:1;">
+        <div class="row" style="justify-content:space-between; align-items:flex-start;">
+          <div class="mono" style="font-size:72px; font-weight:800; color:var(--bean-500); letter-spacing:-0.04em; line-height:1;">03</div>
+          <div class="chip tag">Google Partner</div>
+        </div>
+        <h3 class="h-3">Google<br><em class="bean">官方合作伙伴</em></h3>
+        <p style="font-size:18px; line-height:1.55; color:var(--fg-2);">
+          官方认证合作伙伴 — 可对接 Google 海外推广、Search Console<br>
+          与 AI Overview 集成。
+        </p>
+      </div>
+    </div>
+
+    <div class="footnote">从微信、Google，到下一代 AI 搜索 — 持续在「入口」上下注。</div>
+    <div class="pagenum">07 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 08 — AI PRODUCT PORTFOLIO
+  ========================================================= -->
+  <section data-screen-label="08 AI 产品矩阵" data-bg="cream">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> AI 产品矩阵</div>
+      <div class="right">Part 1 · 06</div>
+    </div>
+
+    <div class="stack gap-5">
+      <div class="eyebrow">AI PRODUCT PORTFOLIO · NOW BUILDING</div>
+      <h2 class="h-1" style="max-width:1700px;">
+        我们正在做的 <em class="bean">AI 产品</em>，<br>
+        爱搭云只是<em class="bean">其中之一</em>
+      </h2>
+    </div>
+
+    <div class="ai-grid grow" style="margin-top:36px;">
+      <!-- FEATURED · AIDA.YUN -->
+      <div class="ai-card featured">
+        <div class="featured-head">
+          <span class="today-badge">今日主角 · Today</span>
+          <span class="featured-domain">aida.yun</span>
+        </div>
+
+        <div class="featured-title">
+          <h3>爱搭云</h3>
+          <span class="sub">B2B 出海 · GEO 营销引擎</span>
+        </div>
+
+        <p class="featured-desc">
+          让 ChatGPT、豆包、Perplexity 在被海外客户提问时<strong style="color:#fff;">主动引用你的产品</strong>，把每一次曝光变成询盘。
+        </p>
+
+        <div class="featured-tags">
+          <span class="tag">GEO 原生</span>
+          <span class="tag">多语言</span>
+          <span class="tag">4 周交付</span>
+          <span class="tag">AI 答案位</span>
+        </div>
+
+        <div class="winshot">
+          <div class="bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="url">aida.yun</span>
+          </div>
+          <div class="scr"><img src="assets/projects/aida.png" alt="爱搭云 aida.yun"></div>
+        </div>
+      </div>
+
+      <!-- 3 SIDE PROJECTS -->
+      <div class="ai-side">
+        <div class="side-card">
+          <div class="winshot">
+            <div class="bar">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <span class="url">quickimage.ai</span>
+            </div>
+            <div class="scr"><img src="assets/projects/quickimage.png" alt="Quick Image"></div>
+          </div>
+          <div class="body">
+            <div class="domain">quickimage.ai</div>
+            <h4 class="name">Quick Image</h4>
+            <p class="desc">服装电商 AI 虚拟摄影棚 — 几分钟低成本产出专业模特试穿与产品图。</p>
+          </div>
+        </div>
+        <div class="side-card">
+          <div class="winshot">
+            <div class="bar">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <span class="url">learncraft.ai</span>
+            </div>
+            <div class="scr"><img src="assets/projects/learncraft.png" alt="Learn Craft"></div>
+          </div>
+          <div class="body">
+            <div class="domain">learncraft.ai</div>
+            <h4 class="name">Learn Craft</h4>
+            <p class="desc">面向 3–9 年级学生的 AI 写作学习平台 — 实时批改 + 个性化练习 + 老师直播课。</p>
+          </div>
+        </div>
+        <div class="side-card">
+          <div class="winshot">
+            <div class="bar">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <span class="url">wordmind.ai</span>
+            </div>
+            <div class="scr"><img src="assets/projects/wordmind.png" alt="Wordmind"></div>
+          </div>
+          <div class="body">
+            <div class="domain">wordmind.ai</div>
+            <h4 class="name">Wordmind</h4>
+            <p class="desc">多角色 AI 对话与写作辅助平台 — 学术写作、简历润色、文书优化一站覆盖。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">同一支团队 · 同一套 AI 工程化能力 — 已经验证过的方法论，正在用来做你的官网。</div>
+    <div class="pagenum">08 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 09 — PART 2 DIVIDER · GEO
+  ========================================================= -->
+  <section data-screen-label="09 Part 2 封面 — GEO" data-bg="bean">
+    <div class="topbar">
+      <div class="left" style="color:rgba(255,255,255,0.85);"><span class="dot" style="background:#fff;"></span> Part Two</div>
+      <div class="right">GEO · The new search</div>
+    </div>
+
+    <div class="stack grow" style="justify-content:center; gap:40px;">
+      <div class="mono" style="font-size:24px; color:rgba(255,255,255,0.7); letter-spacing:0.08em;">PART 02 — WHAT IS GEO</div>
+      <h1 class="display" style="color:#fff; font-size:180px;">
+        GEO<br>
+        <span style="opacity:0.85; font-weight:600;">是什么？</span>
+      </h1>
+      <p class="lead" style="font-size:32px; color:rgba(255,255,255,0.95);">
+        先讲一句话定义，再讲一个场景、一个事实、三个痛点 — 把 GEO 讲清楚。
+      </p>
+    </div>
+
+    <div class="footnote" style="color:rgba(255,255,255,0.7);">六分钟，看懂 AI 时代的入口逻辑</div>
+    <div class="pagenum" style="color:rgba(255,255,255,0.6);">09 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 10 — GEO DEFINITION (FIRST!)
+  ========================================================= -->
+  <section data-screen-label="10 GEO 定义">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 一句话定义</div>
+      <div class="right">Part 2 · 01</div>
+    </div>
+
+    <div class="stack grow" style="justify-content:center; gap:48px; max-width:1600px;">
+      <div class="eyebrow">DEFINITION</div>
+      <div class="row gap-8">
+        <div class="stack gap-2">
+          <div class="small" style="text-transform:uppercase; letter-spacing:0.12em; color:var(--fg-4);">英文全称</div>
+          <div class="mono" style="font-size:32px; font-weight:600;">Generative Engine Optimization</div>
+        </div>
+        <div class="divider-v"></div>
+        <div class="stack gap-2">
+          <div class="small" style="text-transform:uppercase; letter-spacing:0.12em; color:var(--fg-4);">中文</div>
+          <div style="font-size:32px; font-weight:600;">生成式搜索引擎优化</div>
+        </div>
+      </div>
+      <h1 class="h-big" style="font-size:120px; margin-top:8px;">
+        GEO，就是<br>
+        让 AI 在回答问题时，<br>
+        <em class="bean">把你列进答案里</em>
+      </h1>
+    </div>
+
+    <div class="footnote">SEO 优化搜索引擎；GEO 优化生成式 AI 引擎。一字之差，规则完全不同。</div>
+    <div class="pagenum">10 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 11 — SEO vs GEO ONE-LINER
+  ========================================================= -->
+  <section data-screen-label="11 SEO vs GEO" data-bg="forest">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 用一句话区分</div>
+      <div class="right">Part 2 · 02</div>
+    </div>
+
+    <div class="stack grow" style="justify-content:center; gap:80px;">
+      <h1 class="h-big" style="font-size:120px; color:#fff;">
+        <span style="opacity:0.55;">SEO 让用户</span><br>
+        <span style="opacity:0.55;">找到你的链接</span><br><br>
+        GEO 让 AI<br>
+        <em class="underline">替用户推荐你</em>
+      </h1>
+    </div>
+
+    <div class="footnote">从「被找到」到「被推荐」 — 是入口逻辑的根本转变。</div>
+    <div class="pagenum">11 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 12 — REAL CASE
+  ========================================================= -->
+  <section data-screen-label="12 真实场景" data-bg="cream">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 一个真实场景</div>
+      <div class="right">Part 2 · 03</div>
+    </div>
+
+    <div class="row grow gap-9" style="align-items:center;">
+      <div class="stack gap-5" style="flex:1; max-width:760px;">
+        <div class="eyebrow">REAL CASE · 2026 春</div>
+        <h2 class="h-1">
+          海外客户<br>
+          已经不在<br>
+          <em class="bean">Google 找你了</em>
+        </h2>
+        <p class="lead">
+          客户向 AI 提问：<br>
+          <em style="font-style:italic; color:var(--fg-1);">"哪些供应商能在 Shopify 上做 AI 工具？"</em>
+        </p>
+        <p class="lead" style="margin-top:8px;">
+          AI 给出多个推荐。<strong>其中一个，是我们。</strong><br>
+          没做 GEO 改造的中国供应商，根本没出现在答案里。
+        </p>
+        <p class="lead" style="margin-top:16px; color:var(--bean-700); font-weight:600;">
+          未被 AI 引用 ≠ 网站不够好。<br>
+          而是企业，在 AI 时代<u>隐身</u>。
+        </p>
+      </div>
+
+      <!-- chat mock -->
+      <div class="card" style="flex:1; padding:0; overflow:hidden; max-width:880px;">
+        <div style="background:#0C1316; color:#fff; padding:18px 28px; display:flex; align-items:center; gap:12px; font-size:14px; letter-spacing:0.1em;">
+          <span style="width:10px; height:10px; border-radius:50%; background:#06AA65;"></span>
+          <span class="mono" style="opacity:0.7;">chat.example.com</span>
+          <span style="margin-left:auto; font-size:12px; opacity:0.5;">2026 · live</span>
+        </div>
+        <div style="padding:36px 40px; display:flex; flex-direction:column; gap:24px;">
+          <div style="align-self:flex-end; max-width:600px; background:#06AA65; color:#fff; padding:18px 22px; border-radius:18px 18px 4px 18px; font-size:19px; line-height:1.4;">
+            Which Chinese vendors<br>can build AI tools on Shopify?
+          </div>
+          <div style="align-self:flex-start; max-width:680px; background:#F2F4F3; color:#0C1316; padding:22px 26px; border-radius:18px 18px 18px 4px; font-size:17px; line-height:1.55;">
+            <div style="font-weight:600; margin-bottom:10px; color:#06AA65; font-size:13px; letter-spacing:0.1em;">AI · ANSWER</div>
+            For Shopify-native AI tooling with proven cross-border delivery,
+            three vendors are commonly referenced:
+            <div style="margin-top:14px; font-family:'Input Mono', monospace; font-size:15px; line-height:2;">
+              1. <span style="background:#06AA65; color:#fff; padding:2px 8px; border-radius:4px;">Beansmile</span> — Shopify partner, 13y, multilingual<br>
+              2. ▮▮▮▮▮▮  — strong app ecosystem<br>
+              3. ▮▮▮▮▮▮  — DACH market focus
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">这就是 GEO 要解决的问题：让你成为 AI 答案里的那个名字。</div>
+    <div class="pagenum">12 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 13 — 3-5 NAMES HARD FACT
+  ========================================================= -->
+  <section data-screen-label="13 3-5 个名字" data-bg="dark">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 一个事实</div>
+      <div class="right">Part 2 · 04</div>
+    </div>
+
+    <div class="stack grow" style="justify-content:center; gap:56px;">
+      <div class="eyebrow">THE HARD FACT</div>
+      <h1 class="display" style="font-size:180px;">
+        AI 的回答里<br>
+        只有 <em class="bean">3–5 个</em> 名字
+      </h1>
+      <p class="lead" style="font-size:32px;">
+        没有第二页，没有「再加载更多」，没有「Show more」。<br>
+        <span style="color:#fff; font-weight:600;">第六名不存在。</span>
+      </p>
+    </div>
+
+    <div class="footnote">蓝链时代有第一页十条；AI 时代是「答案位」零和游戏。</div>
+    <div class="pagenum">13 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 14 — THREE PAIN POINTS
+  ========================================================= -->
+  <section data-screen-label="14 三个痛点">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 出海企业的三大痛点</div>
+      <div class="right">Part 2 · 05</div>
+    </div>
+
+    <div class="stack gap-5">
+      <div class="eyebrow">THREE PAIN POINTS</div>
+      <h2 class="h-1" style="max-width:1500px;">
+        为什么 AI <em class="bean">不引用</em><br>
+        你的官网？
+      </h2>
+      <p class="lead" style="margin-top:8px;">
+        不是「网站做得不够好」 — 而是 AI 进不来、看不懂，也找不到可引用片段。
+      </p>
+    </div>
+
+    <div class="row gap-6 grow" style="margin-top:48px; align-items:stretch;">
+      <div class="card stack gap-4" style="flex:1;">
+        <div class="row" style="justify-content:space-between; align-items:center;">
+          <div class="mono" style="font-size:84px; font-weight:800; color:var(--bean-500); letter-spacing:-0.04em; line-height:1;">01</div>
+          <div class="chip tag">看不懂</div>
+        </div>
+        <h3 class="h-3">AI 看<em class="bean">不懂</em></h3>
+        <p style="font-size:19px; line-height:1.55; color:var(--fg-2);">
+          官网以图片和非结构化文本为主，缺 Schema 标记和语义化 HTML。<br>
+          AI 即使来了，也无法解析产品参数与企业资质。
+        </p>
+        <div class="small" style="margin-top:auto; color:var(--fg-4);">缺失：JSON-LD · 语义标签 · 字段治理</div>
+      </div>
+
+      <div class="card stack gap-4" style="flex:1; background:var(--bean-50); border-color:var(--bean-100);">
+        <div class="row" style="justify-content:space-between; align-items:center;">
+          <div class="mono" style="font-size:84px; font-weight:800; color:var(--bean-600); letter-spacing:-0.04em; line-height:1;">02</div>
+          <div class="chip tag" style="border-color:var(--bean-200); color:var(--bean-700);">看不到</div>
+        </div>
+        <h3 class="h-3">AI 看<em class="bean">不到</em></h3>
+        <p style="font-size:19px; line-height:1.55; color:var(--fg-2);">
+          robots.txt 屏蔽了 GPTBot / PerplexityBot / ClaudeBot。<br>
+          企业内容根本不会进入 AI 的知识库与引用源。
+        </p>
+        <div class="small" style="margin-top:auto; color:var(--bean-700);">缺失：AI 爬虫开放 · llms.txt · Markdown feed</div>
+      </div>
+
+      <div class="card stack gap-4" style="flex:1;">
+        <div class="row" style="justify-content:space-between; align-items:center;">
+          <div class="mono" style="font-size:84px; font-weight:800; color:var(--bean-500); letter-spacing:-0.04em; line-height:1;">03</div>
+          <div class="chip tag">没东西可引</div>
+        </div>
+        <h3 class="h-3">没东西<em class="bean">可引用</em></h3>
+        <p style="font-size:19px; line-height:1.55; color:var(--fg-2);">
+          没有覆盖「产品选型 / 方案对比 / 资质认证」等 AI 问答高频场景。<br>
+          <strong>大量曝光机会付之东流 — 这是最致命的一类。</strong>
+        </p>
+        <div class="small" style="margin-top:auto; color:var(--fg-4);">缺失：场景化内容 · FAQ 嵌入 · 对比页</div>
+      </div>
+    </div>
+
+    <div class="footnote">三个痛点层层递进 — 任意一环缺失，前面的努力都白做。</div>
+    <div class="pagenum">14 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 15 — WHY NOW
+  ========================================================= -->
+  <section data-screen-label="15 为什么是现在" data-bg="cream">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 为什么是现在</div>
+      <div class="right">Part 2 · 06</div>
+    </div>
+
+    <div class="stack gap-5">
+      <div class="eyebrow">WHY NOW · 三个理由</div>
+      <h2 class="h-1" style="max-width:1500px;">
+        这不是一道<br>
+        "明年再说" 的题
+      </h2>
+    </div>
+
+    <div class="row gap-6 grow" style="margin-top:56px; align-items:stretch;">
+      <div class="card stack gap-4" style="flex:1; background:#fff;">
+        <div class="stat-num" style="font-size:96px;">01</div>
+        <h3 class="h-3">流量入口在迁移</h3>
+        <p style="font-size:19px; line-height:1.55; color:var(--fg-2);">
+          全球 AI 搜索使用量正在快速增长。<br>
+          年轻用户在 ChatGPT / Perplexity 上提问的比例，<br>
+          已经追平甚至超过传统搜索。
+        </p>
+        <div class="small" style="margin-top:auto; color:var(--fg-4);">入口 ≠ Google 独占</div>
+      </div>
+
+      <div class="card stack gap-4" style="flex:1; background:var(--ink-900); color:#fff; border-color:transparent;">
+        <div class="stat-num" style="font-size:96px; color:var(--bean-300);">02</div>
+        <h3 class="h-3" style="color:#fff;">答案位是零和游戏</h3>
+        <p style="font-size:19px; line-height:1.55; color:rgba(255,255,255,0.75);">
+          蓝链有 10 个位置，AI 答案只有 3–5 个。<br>
+          你不被引用，意味着另一家被引用。<br>
+          中间没有缓冲带。
+        </p>
+        <div class="small" style="margin-top:auto; color:var(--bean-300);">名字出现 = 询盘归属</div>
+      </div>
+
+      <div class="card stack gap-4" style="flex:1; background:#fff;">
+        <div class="stat-num" style="font-size:96px;">03</div>
+        <h3 class="h-3">越早进入，越难被替换</h3>
+        <p style="font-size:19px; line-height:1.55; color:var(--fg-2);">
+          AI 模型的"记忆"是滚动训练出来的。<br>
+          先进入它认知的品牌，会被持续引用。<br>
+          后来者要把名字「挤进去」，成本更高。
+        </p>
+        <div class="small" style="margin-top:auto; color:var(--fg-4);">先发优势复利</div>
+      </div>
+    </div>
+
+    <div class="footnote">入口在变 · 位置稀缺 · 复利存在 — 三个加在一起，就是「现在动手」。</div>
+    <div class="pagenum">15 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 16 — PART 3 VIDEO OPENER
+  ========================================================= -->
+  <section data-screen-label="16 Part 3 视频开场" data-bg="ink">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> Part Three</div>
+      <div class="right">aida.yun · The Solution</div>
+    </div>
+
+    <div class="row gap-8 grow" style="align-items:center; margin-top:24px;">
+      <div class="stack gap-6" style="flex:1; max-width:680px;">
+        <div class="mono" style="font-size:18px; color:var(--bean-300); letter-spacing:0.14em;">PART 03 — OUR SOLUTION</div>
+        <h1 class="h-big" style="color:#fff; font-size:96px;">
+          爱搭云<br>
+          <em class="bean">aida.yun</em><br>
+          GEO 时代的<br>企业数字门户
+        </h1>
+        <p class="lead">
+          不是重建一个网站。<br>
+          是把官网从<u>成本中心</u>，重塑为<u>主动询盘来源</u>。
+        </p>
+        <div class="chip" style="align-self:flex-start;">▶︎ 请先观看 90 秒产品宣传片</div>
+      </div>
+
+      <div style="flex:1.1;">
+        <div class="video-frame">
+          <div class="video-stripes"></div>
+          <div class="video-play"></div>
+          <div class="video-caption">
+            <div>
+              <div class="ttl">爱搭云 · 90 秒</div>
+              <div class="small" style="color:rgba(255,255,255,0.55); margin-top:6px;">让 AI 主动推荐您的品牌</div>
+            </div>
+            <div class="sub">00:00 / 01:30</div>
+          </div>
+        </div>
+        <div class="mono small" style="margin-top:18px; color:rgba(255,255,255,0.45); letter-spacing:0.1em;">
+          // 视频文件未嵌入 — 演示时手动播放 aida.yun-intro.mp4
+        </div>
+      </div>
+    </div>
+
+    <div class="pagenum">16 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 17 — CORE PHILOSOPHY
+  ========================================================= -->
+  <section data-screen-label="17 核心理念">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 核心理念</div>
+      <div class="right">Part 3 · 01</div>
+    </div>
+
+    <div class="stack grow" style="justify-content:center; gap:48px; max-width:1700px;">
+      <div class="eyebrow">CORE PHILOSOPHY</div>
+      <h1 class="h-big" style="font-size:108px;">
+        不只是重建网站<br>
+        是让<em class="bean">您的品牌</em>，<br>
+        成为 AI 搜索时代的<u>行业标杆</u>
+      </h1>
+
+      <div class="row gap-7" style="margin-top:32px;">
+        <div class="stack gap-3" style="flex:1;">
+          <div class="mono" style="font-size:13px; color:var(--bean-600); letter-spacing:0.14em;">DIFFERENCE 01</div>
+          <div class="h-3">传统 SEO 针对 Google</div>
+          <p style="font-size:18px; color:var(--fg-2); line-height:1.55;">
+            关键词、外链、爬虫排名。
+          </p>
+        </div>
+        <div class="divider-v"></div>
+        <div class="stack gap-3" style="flex:1;">
+          <div class="mono" style="font-size:13px; color:var(--bean-600); letter-spacing:0.14em;">DIFFERENCE 02</div>
+          <div class="h-3">爱搭云针对 <em class="bean">AI</em></div>
+          <p style="font-size:18px; color:var(--fg-2); line-height:1.55;">
+            让 ChatGPT、豆包、Perplexity、Claude 在被海外客户提问时，
+            <strong>主动引用您的产品和内容</strong>。
+          </p>
+        </div>
+        <div class="divider-v"></div>
+        <div class="stack gap-3" style="flex:1;">
+          <div class="mono" style="font-size:13px; color:var(--bean-600); letter-spacing:0.14em;">DIFFERENCE 03</div>
+          <div class="h-3">这是<em class="bean">传统建站公司</em><br>不具备的能力</div>
+          <p style="font-size:18px; color:var(--fg-2); line-height:1.55;">
+            GEO 不能事后补课 — 必须从第一天就内置在网站基因里。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">旧官网是为上一个时代设计的；它对 AI 搜索引擎来说是不透明的黑盒。</div>
+    <div class="pagenum">17 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 18 — FOUR UPGRADE DIRECTIONS
+  ========================================================= -->
+  <section data-screen-label="18 四大升级方向" data-bg="cream">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 四大升级方向</div>
+      <div class="right">Part 3 · 02</div>
+    </div>
+
+    <div class="stack gap-5">
+      <div class="eyebrow">FOUR UPGRADE DIRECTIONS</div>
+      <h2 class="h-1">四件事，<em class="bean">一次做对</em></h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:24px; margin-top:48px;">
+      <div class="card stack gap-3" style="background:#fff;">
+        <div class="row" style="justify-content:space-between; align-items:center;">
+          <div class="mono" style="font-size:48px; font-weight:800; color:var(--bean-500); letter-spacing:-0.04em; line-height:1;">01</div>
+          <span class="chip">核心差异化</span>
+        </div>
+        <h3 class="h-3">AI 搜索可见度</h3>
+        <p style="font-size:17px; line-height:1.55; color:var(--fg-2);">
+          全站内容改写为 AI 可引用的权威表述 · 资质背书在 AI 视角下显性化 · 向所有主流 AI 引擎开放索引 · 上线前完成 GEO 基线测试。
+        </p>
+        <div class="small" style="color:var(--bean-700); margin-top:4px;">目标：稳定出现、准确呈现、引导询盘 — 把偶然变成必然。</div>
+      </div>
+
+      <div class="card stack gap-3" style="background:#fff;">
+        <div class="row" style="justify-content:space-between; align-items:center;">
+          <div class="mono" style="font-size:48px; font-weight:800; color:var(--bean-500); letter-spacing:-0.04em; line-height:1;">02</div>
+          <span class="chip tag">Multi-locale</span>
+        </div>
+        <h3 class="h-3">中英双语 + 目标市场当地语言</h3>
+        <p style="font-size:17px; line-height:1.55; color:var(--fg-2);">
+          默认同步上线中文 + 英文双语 · 按目标市场叠加当地语言（德 / 法 / 西 / 意 / 阿 / 日 / 韩 等任意组合）· hreflang 内置 · AI 辅助生成专业文案 + 人工润色。
+        </p>
+        <div class="small" style="color:var(--fg-3); margin-top:4px;">语种 ≠ 翻译；是各市场的搜索语境。</div>
+      </div>
+
+      <div class="card stack gap-3" style="background:#fff;">
+        <div class="row" style="justify-content:space-between; align-items:center;">
+          <div class="mono" style="font-size:48px; font-weight:800; color:var(--bean-500); letter-spacing:-0.04em; line-height:1;">03</div>
+          <span class="chip tag">Conversion</span>
+        </div>
+        <h3 class="h-3">产品找得到，询盘下得来</h3>
+        <p style="font-size:17px; line-height:1.55; color:var(--fg-2);">
+          多维度产品筛选（按协议 / 功率 / 电压 / 场景一键过滤）· 每个产品页都有清晰的询盘入口 · 移动端完整适配 · 参数表横滚、技术图可放大。
+        </p>
+        <div class="small" style="color:var(--fg-3); margin-top:4px;">从流量到真实商机的最后一公里。</div>
+      </div>
+
+      <div class="card stack gap-3" style="background:var(--ink-900); color:#fff; border-color:transparent;">
+        <div class="row" style="justify-content:space-between; align-items:center;">
+          <div class="mono" style="font-size:48px; font-weight:800; color:var(--bean-300); letter-spacing:-0.04em; line-height:1;">04</div>
+          <span class="chip tag" style="color:rgba(255,255,255,0.6); border-color:rgba(255,255,255,0.2);">OpenClaw</span>
+        </div>
+        <h3 class="h-3" style="color:#fff;">小龙虾 · 对话式内容管理</h3>
+        <p style="font-size:17px; line-height:1.55; color:rgba(255,255,255,0.78);">
+          双模式 CMS — 后台传统界面操作，或直接<strong>用中文告诉 AI 要改什么</strong>，秒级完成。
+          团队不再因「后台太难用」而放弃更新网站。
+        </p>
+        <div class="small" style="color:var(--bean-300); margin-top:4px;">让内容更新这件事，不再是技术债。</div>
+      </div>
+    </div>
+
+    <div class="pagenum">18 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 19 — DELIVERABLES
+  ========================================================= -->
+  <section data-screen-label="19 交付内容">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 交付内容</div>
+      <div class="right">Part 3 · 03</div>
+    </div>
+
+    <div class="stack gap-5">
+      <div class="eyebrow">DELIVERABLES · 三个交付包</div>
+      <h2 class="h-1" style="max-width:1500px;">
+        从诊断到上线，<br>
+        <em class="bean">每一份产物都可验收</em>
+      </h2>
+    </div>
+
+    <div class="row gap-5 grow" style="margin-top:48px; align-items:stretch;">
+      <div class="card stack gap-4" style="flex:1;">
+        <div class="mono" style="font-size:13px; color:var(--bean-600); letter-spacing:0.14em;">PACKAGE 01</div>
+        <h3 class="h-3">分析报告</h3>
+        <ul style="margin:0; padding:0 0 0 0; list-style:none; font-size:17px; line-height:1.85; color:var(--fg-2);">
+          <li>· 官网诊断报告 — SEO / GEO / UX 综合评分</li>
+          <li>· 竞品分析 — 3 家同类厂商深度对比</li>
+          <li>· 关键词研究 — 多语言核心词矩阵</li>
+          <li>· GEO 基线测试报告 — 多平台可见度基准</li>
+        </ul>
+      </div>
+
+      <div class="card stack gap-4" style="flex:1; background:var(--bean-50); border-color:var(--bean-100);">
+        <div class="mono" style="font-size:13px; color:var(--bean-700); letter-spacing:0.14em;">PACKAGE 02</div>
+        <h3 class="h-3" style="color:var(--bean-900);">设计与开发</h3>
+        <ul style="margin:0; padding:0; list-style:none; font-size:17px; line-height:1.85; color:var(--fg-2);">
+          <li>· AI 行业理解 + 视觉方案</li>
+          <li>· 5 个典型页面 UI 设计</li>
+          <li>· 完整新官网（中英 + 目标市场语言同步上线）</li>
+          <li>· 产品筛选系统 + 询盘系统 + CMS</li>
+          <li>· 小龙虾 AI Agent 对话式更新</li>
+          <li>· 301 跳转 — 搜索排名平稳过渡</li>
+        </ul>
+      </div>
+
+      <div class="card stack gap-4" style="flex:1;">
+        <div class="mono" style="font-size:13px; color:var(--bean-600); letter-spacing:0.14em;">PACKAGE 03</div>
+        <h3 class="h-3">SEO / GEO 配置与上线后</h3>
+        <ul style="margin:0; padding:0; list-style:none; font-size:17px; line-height:1.85; color:var(--fg-2);">
+          <li>· 全站 AI 可读性改写</li>
+          <li>· AI 爬虫开放配置</li>
+          <li>· 三语 hreflang 标记</li>
+          <li>· 30 天技术健康监控报告</li>
+          <li>· CMS / OpenClaw 运营手册</li>
+          <li>· 年度服务包（含 AI Token + 20 次数据更新）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pagenum">19 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 20 — AGENT ARMY · HOW WE BUILD
+  ========================================================= -->
+  <section data-screen-label="20 Agent 军团">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 我们是如何做到 4 周交付的</div>
+      <div class="right">Part 3 · 04</div>
+    </div>
+
+    <div class="stack gap-5">
+      <div class="eyebrow">HOW WE BUILD · INPUT → AGENT ARMY → OUTPUT</div>
+      <h2 class="h-1" style="max-width:1700px;">
+        一支 <em class="bean">AI Agent 军团</em>，<br>
+        把 3 个月的人工活，并行成 <em class="bean">4 周</em>
+      </h2>
+    </div>
+
+    <div class="agent-flow grow" style="margin-top:40px;">
+      <!-- INPUT -->
+      <div class="flow-col">
+        <div class="flow-label">INPUT · 原材料</div>
+        <div class="flow-card stack gap-3">
+          <div class="material">原有官网</div>
+          <div class="material">产品 PDF</div>
+          <div class="material">公司 PPT</div>
+          <div class="material">市场素材</div>
+          <div class="material muted">…</div>
+        </div>
+        <div class="flow-note">客户只需提供<br>已有材料</div>
+      </div>
+
+      <!-- ARROW -->
+      <svg class="flow-arrow" viewBox="0 0 80 40" preserveAspectRatio="xMidYMid meet">
+        <path d="M2,20 L66,20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"></path>
+        <path d="M58,11 L74,20 L58,29" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+
+      <!-- AGENT ARMY -->
+      <div class="flow-col agents">
+        <div class="flow-label" style="color:var(--bean-600);">AGENT 军团 · 5 个专业 Agent 并行作业</div>
+        <div class="agent-grid">
+          <div class="agent-chip">
+            <span class="num">01</span>
+            <div class="meta"><div class="t">内容理解 Agent</div><div class="s">抽取产品 / 品牌核心信息</div></div>
+          </div>
+          <div class="agent-chip">
+            <span class="num">02</span>
+            <div class="meta"><div class="t">设计 Agent</div><div class="s">AI 行业理解 + 视觉方案</div></div>
+          </div>
+          <div class="agent-chip">
+            <span class="num">03</span>
+            <div class="meta"><div class="t">写作润色 Agent</div><div class="s">AI 友好结构 + 站点文案</div></div>
+          </div>
+          <div class="agent-chip">
+            <span class="num">04</span>
+            <div class="meta"><div class="t">翻译 Agent</div><div class="s">多语言本地化</div></div>
+          </div>
+          <div class="agent-chip wide">
+            <span class="num">05</span>
+            <div class="meta"><div class="t">SEO / GEO Agent</div><div class="s">关键词 · 元数据 · 答案位优化</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARROW -->
+      <svg class="flow-arrow" viewBox="0 0 80 40" preserveAspectRatio="xMidYMid meet">
+        <path d="M2,20 L66,20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"></path>
+        <path d="M58,11 L74,20 L58,29" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+
+      <!-- OUTPUT -->
+      <div class="flow-col">
+        <div class="flow-label">OUTPUT · 交付成果</div>
+        <div class="flow-card stack gap-3 out">
+          <div class="material bean">内容准确</div>
+          <div class="material bean">多语言同步</div>
+          <div class="material bean">SEO / GEO 原生</div>
+          <div class="material bean">询盘转化闭环</div>
+          <div class="material bean">可持续运营</div>
+        </div>
+        <div class="flow-note">一个能被 AI<br>引用的新官网</div>
+      </div>
+    </div>
+
+    <div class="footnote">同样一份原材料 — 过去靠人工 8–12 周交付，现在靠 Agent 并行 4 周上线。</div>
+    <div class="pagenum">20 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 21 — 建站引导 · ONBOARDING WIZARD
+  ========================================================= -->
+  <section data-screen-label="21 建站引导" data-bg="cream">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 聚焦 · 建站引导</div>
+      <div class="right">Part 3 · 05</div>
+    </div>
+
+    <div class="stack gap-4">
+      <div class="eyebrow">SPOTLIGHT · ONBOARDING WIZARD</div>
+      <h2 class="h-2" style="max-width:1700px; font-size:52px;">
+        填一份 <em class="bean">企业资讯</em>，几分钟内拿到第一版 <u>可上线官网</u>
+      </h2>
+    </div>
+
+    <div class="row gap-6 grow" style="margin-top:24px; align-items:stretch; min-height:0;">
+      <!-- LEFT · Backend form screenshot -->
+      <div class="stack gap-3" style="flex:1; min-width:0; min-height:0;">
+        <div class="row" style="justify-content:space-between; align-items:baseline;">
+          <div class="mono" style="font-size:13px; color:var(--fg-4); letter-spacing:0.16em;">// 01 — 后台填写企业资讯</div>
+          <div class="mono" style="font-size:13px; color:var(--bean-600); letter-spacing:0.14em; font-weight:700;">INPUT &nbsp;·&nbsp; FORM</div>
+        </div>
+
+        <div class="winshot" style="flex:1; min-height:0; max-height:560px;">
+          <div class="bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="url">aida.yun / onboarding</span>
+          </div>
+          <div class="scr" style="background:#f5f5f2;">
+            <img src="assets/onboarding-form.png" alt="后台填写企业资讯"
+                 style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:top center; display:block;">
+          </div>
+        </div>
+
+        <div class="small" style="margin-top:2px;">
+          客户在后台分步填写：公司名称、主营产品、目标市场、品牌调性等核心字段 — <strong>无需提前准备文档</strong>。
+        </div>
+      </div>
+
+      <!-- ARROW -->
+      <div class="stack" style="justify-content:center; align-items:center; flex:none; padding-top:48px;">
+        <svg width="56" height="40" viewBox="0 0 80 40" preserveAspectRatio="xMidYMid meet" style="color:var(--bean-500);">
+          <path d="M2,20 L66,20" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"></path>
+          <path d="M58,11 L74,20 L58,29" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <div class="mono" style="font-size:11px; color:var(--fg-4); letter-spacing:0.14em; margin-top:14px; writing-mode:vertical-rl;">几分钟 · NOT 几天</div>
+      </div>
+
+      <!-- RIGHT · Landing page output -->
+      <div class="stack gap-3" style="flex:1; min-width:0; min-height:0;">
+        <div class="row" style="justify-content:space-between; align-items:baseline;">
+          <div class="mono" style="font-size:13px; color:var(--fg-4); letter-spacing:0.16em;">// 02 — 一键生成 Landing Page</div>
+          <div class="mono" style="font-size:13px; color:var(--bean-600); letter-spacing:0.14em; font-weight:700;">OUTPUT &nbsp;·&nbsp; WEBSITE</div>
+        </div>
+
+        <div class="winshot" style="flex:1; min-height:0; max-height:560px;">
+          <div class="bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="url">your-brand.aida.yun</span>
+          </div>
+          <div class="scr" style="background:#fff;">
+            <img src="assets/onboarding-landing.png" alt="生成的 Landing Page"
+                 style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:top center; display:block;">
+          </div>
+        </div>
+
+        <div class="small" style="margin-top:2px;">
+          系统基于填写的资讯，自动调用 Agent 军团并行作业，<strong>几分钟内</strong>生成首屏完整、可直接预览的 Landing Page。
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">建站引导是整个 Agent 工作流的入口 — 把「我不知道从哪里开始」变成「我已经有了一版可用的官网」。</div>
+    <div class="pagenum">21 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 22 — STEP 02 SPOTLIGHT · DESIGN AGENT
+  ========================================================= -->
+  <section data-screen-label="22 Design Agent 聚焦" data-bg="dark">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 聚焦 · STEP 02 · Design Agent</div>
+      <div class="right">Part 3 · 06</div>
+    </div>
+
+    <div class="stack gap-4">
+      <div class="eyebrow">SPOTLIGHT · 设计 AGENT</div>
+      <h2 class="h-2" style="max-width:1700px; font-size:52px;">
+        把<em class="bean">行业理解</em>，变成可落地的<u>视觉系统</u>
+      </h2>
+    </div>
+
+    <div class="row gap-6 grow" style="margin-top:24px; align-items:stretch; min-height:0;">
+      <!-- LEFT · Design Agent UI screenshot · 1600 × 1000 (8:5) -->
+      <div class="stack gap-3" style="flex:1.6; min-width:0; min-height:0;">
+        <div class="row" style="justify-content:space-between; align-items:baseline;">
+          <div class="mono" style="font-size:13px; color:rgba(255,255,255,0.55); letter-spacing:0.16em;">// 01 — AGENT 工作界面</div>
+          <div class="mono" style="font-size:13px; color:var(--bean-300); letter-spacing:0.14em; font-weight:700;">INPUT &nbsp;·&nbsp; UI</div>
+        </div>
+
+        <!-- Bounded by max-height so it never overflows the row.
+             The 1600×1000 image will sit centered via object-fit:contain. -->
+        <div class="winshot" style="flex:1; min-height:0; max-height:560px; box-shadow: 0 24px 60px rgba(0,0,0,0.55);">
+          <div class="bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="url">aida.yun / agent · design</span>
+          </div>
+          <div class="scr" style="background:#fff;">
+            <img src="assets/design-agent-ui.png" alt="设计 Agent 工作界面"
+                 style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:top center; display:block;">
+          </div>
+        </div>
+
+        <div class="small" style="margin-top:2px;">
+          客户上传现有材料 → Agent 抽取行业语义、品牌气质与竞品语言，自动生成<strong style="color:#fff;">视觉方向 + 色板 + 排版骨架</strong>。
+        </div>
+      </div>
+
+      <!-- ARROW -->
+      <div class="stack" style="justify-content:center; align-items:center; flex:none; padding-top:48px;">
+        <svg width="56" height="40" viewBox="0 0 80 40" preserveAspectRatio="xMidYMid meet" style="color:var(--bean-300);">
+          <path d="M2,20 L66,20" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"></path>
+          <path d="M58,11 L74,20 L58,29" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <div class="mono" style="font-size:11px; color:rgba(255,255,255,0.5); letter-spacing:0.14em; margin-top:14px; writing-mode:vertical-rl;">几小时 · NOT 几天</div>
+      </div>
+
+      <!-- RIGHT · GIF output -->
+      <div class="stack gap-3" style="flex:1; min-width:0; min-height:0;">
+        <div class="row" style="justify-content:space-between; align-items:baseline;">
+          <div class="mono" style="font-size:13px; color:rgba(255,255,255,0.55); letter-spacing:0.16em;">// 02 — AGENT 输出</div>
+          <div class="mono" style="font-size:13px; color:var(--bean-300); letter-spacing:0.14em; font-weight:700;">OUTPUT &nbsp;·&nbsp; GIF</div>
+        </div>
+
+        <!-- Animated GIF: plain <img> (image-slot would freeze animation
+             on re-encode). -->
+        <div style="flex:1; min-height:0; max-height:560px; position:relative; border-radius:20px; overflow:hidden; background:#0C1316; border:1px solid rgba(255,255,255,0.10);">
+          <img src="assets/design-agent-output.gif"
+               alt="Design Agent 色板生成动画"
+               style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; display:block;">
+        </div>
+
+        <div class="small" style="margin-top:2px;">
+          一段示意动画：从行业关键词 → 多套候选色系 → 选定色板 + tokens 落地。
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">设计 Agent 把过去依赖资深设计师 3–5 天的「视觉系统搭建」，压缩到几小时内交付一个可落地的初版。</div>
+    <div class="pagenum">22 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 23 — GEO 评测 · BUILT-IN AUDIT
+  ========================================================= -->
+  <section data-screen-label="23 GEO 评测" data-bg="forest">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 聚焦 · GEO 评测</div>
+      <div class="right">Part 3 · 07</div>
+    </div>
+
+    <div class="stack gap-4">
+      <div class="eyebrow">SPOTLIGHT · BEFORE → AFTER</div>
+      <h2 class="h-2" style="max-width:1700px; font-size:52px; color:#fff;">
+        从「AI 搜不到」到「AI 主动推荐」<br>
+        <span style="opacity:0.78;">用同一把尺子，量出 GEO 改造的</span> <u>真实增量</u>
+      </h2>
+    </div>
+
+    <div class="row gap-6 grow" style="margin-top:24px; align-items:stretch; min-height:0;">
+      <!-- LEFT · BEFORE -->
+      <div class="stack gap-3" style="flex:1; min-width:0; min-height:0;">
+        <div class="row" style="justify-content:space-between; align-items:baseline;">
+          <div class="mono" style="font-size:13px; color:rgba(255,255,255,0.55); letter-spacing:0.16em;">// 01 — 改造前 · 旧官网</div>
+          <div class="mono" style="font-size:13px; color:#FF8B6B; letter-spacing:0.14em; font-weight:700;">BEFORE · LOW</div>
+        </div>
+
+        <div class="winshot" style="flex:1; min-height:0; max-height:560px; box-shadow: 0 24px 60px rgba(0,0,0,0.55);">
+          <div class="bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="url">aida.yun / geo-audit · before</span>
+          </div>
+          <div class="scr" style="background:#fff;">
+            <img src="assets/geo-before.png" alt="改造前 GEO 评分"
+                 style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:top center; display:block;">
+          </div>
+        </div>
+
+        <div class="small" style="margin-top:2px;">
+          典型旧官网在 <strong style="color:#fff;">ChatGPT · 豆包 · Perplexity · Claude</strong> 中几乎不被引用 — 可见度、引用率、内容覆盖三项都偏低，AI 时代是 <strong style="color:#FFB59E;">隐身状态</strong>。
+        </div>
+      </div>
+
+      <!-- ARROW · GEO transformation -->
+      <div class="stack" style="justify-content:center; align-items:center; flex:none; padding-top:48px;">
+        <svg width="56" height="40" viewBox="0 0 80 40" preserveAspectRatio="xMidYMid meet" style="color:var(--bean-300);">
+          <path d="M2,20 L66,20" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"></path>
+          <path d="M58,11 L74,20 L58,29" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <div class="mono" style="font-size:11px; color:var(--bean-300); letter-spacing:0.14em; margin-top:14px; writing-mode:vertical-rl; font-weight:700;">aida.yun · GEO 改造</div>
+      </div>
+
+      <!-- RIGHT · AFTER -->
+      <div class="stack gap-3" style="flex:1; min-width:0; min-height:0;">
+        <div class="row" style="justify-content:space-between; align-items:baseline;">
+          <div class="mono" style="font-size:13px; color:rgba(255,255,255,0.55); letter-spacing:0.16em;">// 02 — 改造后 · 新官网</div>
+          <div class="mono" style="font-size:13px; color:var(--bean-300); letter-spacing:0.14em; font-weight:700;">AFTER · HIGH</div>
+        </div>
+
+        <div class="winshot" style="flex:1; min-height:0; max-height:560px; box-shadow: 0 24px 60px rgba(0,0,0,0.55);">
+          <div class="bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="url">aida.yun / geo-audit · after</span>
+          </div>
+          <div class="scr" style="background:#fff;">
+            <img src="assets/geo-after.png" alt="改造后 GEO 评分"
+                 style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:top center; display:block;">
+          </div>
+        </div>
+
+        <div class="small" style="margin-top:2px;">
+          同样一套测评跑出来 — <strong style="color:#fff;">可见度、引用率、内容覆盖、技术健康</strong> 四项全面拉升，品牌从「被忽略」变成「被主动推荐」，AI 答案位 <u style="color:var(--bean-300);">稳定占位</u>。
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">同一份评测脚本、同一组提问语料、同一批 AI 引擎 — 改造前后的差距，不靠口说，靠数据。</div>
+    <div class="pagenum">23 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 24 — TIMELINE
+  ========================================================= -->
+  <section data-screen-label="24 4 周时间线" data-bg="ink">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 项目时间线</div>
+      <div class="right">Part 3 · 08</div>
+    </div>
+
+    <div class="stack gap-5">
+      <div class="eyebrow">DELIVERY TIMELINE · W1 → W4</div>
+      <h2 class="h-1" style="color:#fff; max-width:1600px;">
+        <em class="bean">4 周</em>，从诊断到上线<br>
+        下个月这个时候，您的新官网就能跑数据
+      </h2>
+    </div>
+
+    <div class="tl-grid" style="margin-top:64px;">
+      <div class="tl-card">
+        <div class="week">W1 · WEEK 1</div>
+        <div class="ttl">分析与设计</div>
+        <div class="body">官网深度诊断<br>竞品 / 关键词研究<br>设计方案交付<br>客户确认</div>
+      </div>
+      <div class="tl-card">
+        <div class="week">W2 · WEEK 2</div>
+        <div class="ttl">数据与开发</div>
+        <div class="body">产品数据迁移<br>数据清洗与导入<br>新站开发启动<br>前端框架搭建</div>
+      </div>
+      <div class="tl-card">
+        <div class="week">W3 · WEEK 3</div>
+        <div class="ttl">内容与优化</div>
+        <div class="body">开发完成<br>三语内容生成<br>人工润色审核<br>GEO 优化配置</div>
+      </div>
+      <div class="tl-card now">
+        <div class="week" style="color:rgba(255,255,255,0.85);">W4 · WEEK 4</div>
+        <div class="ttl">上线与交付</div>
+        <div class="body">测试验收<br>正式上线<br>GEO 测试报告<br>运营手册交付</div>
+      </div>
+      <div class="tl-card">
+        <div class="week">D+30 · 持续</div>
+        <div class="ttl">月度运营</div>
+        <div class="body">月度 GEO 报告<br>内容建议<br>AI 引用监测<br>团队自主迭代</div>
+      </div>
+    </div>
+
+    <div class="footnote">仅需 4 周，从诊断到上线 — 快速实现官网升级、抢占 AI 答案位。</div>
+    <div class="pagenum">24 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 25 — PRICING
+  ========================================================= -->
+  <section data-screen-label="25 项目报价" data-bg="cream">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 项目报价</div>
+      <div class="right">Part 3 · 09</div>
+    </div>
+
+    <div class="stack gap-4">
+      <div class="eyebrow">PRICING · 参考报价（按行业标准盘）</div>
+      <h2 class="h-2" style="max-width:1500px;">
+        <em class="bean">¥38,000</em> 一次性 + <em class="bean">¥5,000</em> 年度服务，全部包含，没有隐藏项
+      </h2>
+    </div>
+
+    <div class="row gap-6 grow" style="margin-top:32px; align-items:stretch;">
+      <!-- one-time -->
+      <div class="card stack gap-2" style="flex:1.4; background:#fff; padding:36px 40px;">
+        <div class="row" style="justify-content:space-between; align-items:center; margin-bottom:4px;">
+          <span class="chip">一次性费用</span>
+          <span class="mono small" style="color:var(--fg-4);">ONE-TIME</span>
+        </div>
+        <div class="price-row">
+          <div style="flex:1.6;">
+            <div class="pr-name">AI 诊断 + 数据迁移</div>
+            <div class="pr-desc">官网深度诊断、全站产品数据提取清洗导入</div>
+          </div>
+          <div class="pr-num">¥10,000</div>
+        </div>
+        <div class="price-row">
+          <div style="flex:1.6;">
+            <div class="pr-name">AI 设计方案 + 网站主题</div>
+            <div class="pr-desc">AI 行业理解、5 个典型页面 UI 设计</div>
+          </div>
+          <div class="pr-num">¥5,000</div>
+        </div>
+        <div class="price-row">
+          <div style="flex:1.6;">
+            <div class="pr-name">新功能增强 + 开发</div>
+            <div class="pr-desc">产品筛选、询盘系统、CMS、小龙虾</div>
+          </div>
+          <div class="pr-num">¥8,500</div>
+        </div>
+        <div class="price-row">
+          <div style="flex:1.6;">
+            <div class="pr-name">多语言智能内容生成</div>
+            <div class="pr-desc">AI 生成专业文案，人工润色</div>
+          </div>
+          <div class="pr-num">¥5,000</div>
+        </div>
+        <div class="price-row">
+          <div style="flex:1.6;">
+            <div class="pr-name">SEO / GEO 优化配置</div>
+            <div class="pr-desc">AI 可见度配置、权威背书显性化</div>
+          </div>
+          <div class="pr-num">¥5,000</div>
+        </div>
+        <div class="price-row">
+          <div style="flex:1.6;">
+            <div class="pr-name">竞品 + 关键词分析报告</div>
+            <div class="pr-desc">三语关键词矩阵、竞品对比</div>
+          </div>
+          <div class="pr-num">¥4,500</div>
+        </div>
+        <div class="price-row" style="border-top:2px solid var(--bean-500); padding-top:18px; margin-top:6px;">
+          <div style="flex:1.6;">
+            <div class="pr-name" style="color:var(--bean-700); font-size:22px;">项目总价</div>
+            <div class="pr-desc">含首年 OpenClaw AI Agent Token 费用</div>
+          </div>
+          <div class="pr-num" style="color:var(--bean-700); font-size:30px;">¥38,000</div>
+        </div>
+      </div>
+
+      <!-- annual -->
+      <div class="card stack gap-4" style="flex:1; background:var(--ink-900); color:#fff; border-color:transparent;">
+        <div class="row" style="justify-content:space-between; align-items:center;">
+          <span class="chip">年度服务包</span>
+          <span class="mono small" style="color:rgba(255,255,255,0.5);">ANNUAL</span>
+        </div>
+        <h3 class="h-3" style="color:#fff;">¥5,000 / 年</h3>
+        <ul style="margin:0; padding:0; list-style:none; font-size:18px; line-height:2; color:rgba(255,255,255,0.78);">
+          <li>· 云服务器托管</li>
+          <li>· SSL 证书续期</li>
+          <li>· 系统安全更新</li>
+          <li>· OpenClaw AI Token</li>
+          <li>· 20 次产品数据更新</li>
+        </ul>
+        <div class="small" style="margin-top:auto; color:rgba(255,255,255,0.6);">付款节点与比例可进一步协商确定。</div>
+      </div>
+    </div>
+
+    <div class="pagenum">25 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 26 — WHY US (vs Traditional)
+  ========================================================= -->
+  <section data-screen-label="26 为什么选爱搭云">
+    <div class="topbar">
+      <div class="left"><span class="dot"></span> 为什么选爱搭云</div>
+      <div class="right">Part 3 · 10</div>
+    </div>
+
+    <div class="stack gap-5">
+      <div class="eyebrow">WHY AIDA.YUN</div>
+      <h2 class="h-1" style="max-width:1500px;">
+        两种建站，<em class="bean">两种结果</em>
+      </h2>
+    </div>
+
+    <div class="row gap-6 grow" style="margin-top:56px; align-items:stretch;">
+      <div class="card stack gap-4" style="flex:1;">
+        <div class="row" style="justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <div class="h-3" style="color:var(--fg-3);">传统建站</div>
+          <span class="chip tag">LEGACY</span>
+        </div>
+        <ul style="margin:0; padding:0; list-style:none; font-size:18px; line-height:1.7; color:var(--fg-3);">
+          <li style="padding:14px 0; border-top:1px solid var(--ink-100);">
+            <strong style="color:var(--fg-2);">2–3 个月交付</strong> — 漫长的开发周期</li>
+          <li style="padding:14px 0; border-top:1px solid var(--ink-100);">
+            <strong style="color:var(--fg-2);">GEO 是事后补课</strong> — 上线后再优化</li>
+          <li style="padding:14px 0; border-top:1px solid var(--ink-100);">
+            <strong style="color:var(--fg-2);">修改需找开发</strong> — 每次调整都要付费</li>
+          <li style="padding:14px 0; border-top:1px solid var(--ink-100);">
+            <strong style="color:var(--fg-2);">多语言站另外报价</strong> — 多语言需额外付费</li>
+          <li style="padding:14px 0; border-top:1px solid var(--ink-100);">
+            <strong style="color:var(--fg-2);">交付后无更新</strong> — 无后续支持</li>
+        </ul>
+      </div>
+
+      <div class="card stack gap-4" style="flex:1.05; background:linear-gradient(180deg, #023F29 0%, #0C1F17 100%); color:#fff; border-color:transparent;">
+        <div class="row" style="justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <div class="h-3" style="color:#fff;">爱搭云 · aida.yun</div>
+          <span class="chip" style="background:rgba(255,255,255,0.1); color:#fff; border-color:rgba(255,255,255,0.2);">RECOMMENDED</span>
+        </div>
+        <ul style="margin:0; padding:0; list-style:none; font-size:18px; line-height:1.7; color:rgba(255,255,255,0.85);">
+          <li style="padding:14px 0; border-top:1px solid rgba(255,255,255,0.1);">
+            <strong style="color:#fff;">4 周交付</strong> — 快速上线，抢占先机</li>
+          <li style="padding:14px 0; border-top:1px solid rgba(255,255,255,0.1);">
+            <strong style="color:var(--bean-300);">GEO 从第一天内置</strong> — 让 AI 主动推荐你</li>
+          <li style="padding:14px 0; border-top:1px solid rgba(255,255,255,0.1);">
+            <strong style="color:var(--bean-300);">OpenClaw 对话式更新</strong> — 说一句话改好</li>
+          <li style="padding:14px 0; border-top:1px solid rgba(255,255,255,0.1);">
+            <strong style="color:var(--bean-300);">多语言同步交付</strong> — 默认中英 + 目标市场当地语言</li>
+          <li style="padding:14px 0; border-top:1px solid rgba(255,255,255,0.1);">
+            <strong style="color:var(--bean-300);">持续 AI 内容生成</strong> — 网站越来越"聪明"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footnote">同类项目典型效果区间 — AI 曝光 3–5×，询盘量 +50%–200%，转化率 +30%–80%。</div>
+    <div class="pagenum">26 / 27</div>
+  </section>
+
+  <!-- =========================================================
+  SLIDE 27 — CLOSING CTA
+  ========================================================= -->
+  <section data-screen-label="27 结语" data-bg="bean">
+    <div class="topbar" style="align-items:center;">
+      <div class="partner-lockup">
+        <div class="pl-tile"><img src="assets/beansmile-wordmark.png" alt="Beansmile"></div>
+        <span class="pl-x">×</span>
+        <div class="pl-tile"><img src="assets/jianzhong-logo.png" alt="建众智业"></div>
+      </div>
+      <div class="right">aida.yun · 立即开始</div>
+    </div>
+
+    <div class="stack grow" style="justify-content:center; gap:40px;">
+      <div class="mono" style="font-size:18px; color:rgba(255,255,255,0.8); letter-spacing:0.14em;">MANIFESTO</div>
+      <h1 class="display" style="color:#fff; font-size:150px; line-height:1.15;">
+        让 AI 主动推荐<br>
+        <em class="underline" style="">您的品牌</em>
+      </h1>
+      <p class="lead" style="font-size:32px; color:rgba(255,255,255,0.95); max-width:1400px;">
+        搜索流量正在重新分配。今天行动，六个月后<br>
+        建立的不只是流量，而是<u>难以追赶的壁垒</u>。
+      </p>
+
+      <div class="row gap-7" style="margin-top:24px; align-items:center;">
+        <div class="stack gap-1">
+          <div class="mono" style="font-size:14px; color:rgba(255,255,255,0.7); letter-spacing:0.14em;">CONTACT</div>
+          <div style="font-size:32px; font-weight:700; color:#fff;">leon@beansmile.com</div>
+        </div>
+        <div style="width:1px; background:rgba(255,255,255,0.3); height:64px;"></div>
+        <div class="stack gap-1">
+          <div class="mono" style="font-size:14px; color:rgba(255,255,255,0.7); letter-spacing:0.14em;">FOUNDER</div>
+          <div style="font-size:28px; font-weight:600; color:#fff;">杜立刚 · Beansmile</div>
+        </div>
+        <div style="width:1px; background:rgba(255,255,255,0.3); height:64px;"></div>
+        <div class="stack gap-1">
+          <div class="mono" style="font-size:14px; color:rgba(255,255,255,0.7); letter-spacing:0.14em;">DELIVERY</div>
+          <div style="font-size:28px; font-weight:600; color:#fff;">4 周上线</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote" style="color:rgba(255,255,255,0.75);">Beansmile · Deliver the best. — 2026</div>
+    <div class="pagenum" style="color:rgba(255,255,255,0.65);">27 / 27</div>
+  </section>
+
+</deck-stage>
+
+<!-- F-key fullscreen + presentation mode (hide deck-stage rail) -->
+<script>
+  (function () {
+    var doc = document;
+
+    function fsEl() {
+      return doc.fullscreenElement || doc.webkitFullscreenElement || doc.msFullscreenElement;
+    }
+    function toggleFullscreen() {
+      if (!fsEl()) {
+        var el = doc.documentElement;
+        var req = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+        if (req) req.call(el).catch(function () {});
+      } else {
+        var exit = doc.exitFullscreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+        if (exit) exit.call(doc).catch(function () {});
+      }
+    }
+    // Tell deck-stage to enter / leave presenting mode (hides the left
+    // thumbnail rail and slide-change overlay).
+    function setPresenting(on) {
+      window.postMessage({ __omelette_presenting: !!on }, '*');
+    }
+    ['fullscreenchange', 'webkitfullscreenchange', 'msfullscreenchange'].forEach(function (ev) {
+      doc.addEventListener(ev, function () { setPresenting(!!fsEl()); });
+    });
+
+    window.addEventListener('keydown', function (e) {
+      var t = e.target;
+      var tag = t && t.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || (t && t.isContentEditable)) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault();
+        toggleFullscreen();
+      }
+    });
+  })();
+</script>
+
+<script>
+  // Initialize the world map on slide 4 once libs are ready.
+  var WORLD_MARKERS = [
+    { name: '加拿大',   coords: [56.13, -106.35], dx:  14, dy:  4, anchor: 'start' },
+    { name: '美国',     coords: [38.0,  -97.0],  dx:  14, dy:  4, anchor: 'start' },
+    { name: '西班牙',   coords: [40.46,  -3.75], dx: -14, dy:  10, anchor: 'end'   },
+    { name: '法国',     coords: [46.6,    2.5],  dx: -14, dy: -8,  anchor: 'end'   },
+    { name: '瑞士',     coords: [46.82,   8.23], dx:   0, dy: -16, anchor: 'middle'},
+    { name: '德国',     coords: [51.16,  10.45], dx:  14, dy: -8,  anchor: 'start' },
+    { name: '意大利',   coords: [41.87,  12.57], dx:  14, dy: 14,  anchor: 'start' },
+    { name: '肯尼亚',   coords: [-0.02,  37.91], dx:  14, dy:  4,  anchor: 'start' },
+    { name: '韩国',     coords: [36.5,  127.76], dx: -12, dy: -10, anchor: 'end'   },
+    { name: '日本',     coords: [36.2,  138.25], dx:  14, dy: 14,  anchor: 'start' },
+    { name: '澳大利亚', coords: [-25.27, 133.77], dx:  14, dy:  4, anchor: 'start' }
+  ];
+
+  function initWorldMap() {
+    if (typeof jsVectorMap === 'undefined') { return setTimeout(initWorldMap, 80); }
+    var el = document.getElementById('world-map');
+    if (!el || el.dataset.inited) return;
+    el.dataset.inited = '1';
+    var map = new jsVectorMap({
+      selector: '#world-map',
+      map: 'world',
+      backgroundColor: 'transparent',
+      zoomOnScroll: false,
+      zoomButtons: false,
+      draggable: false,
+      regionStyle: {
+        initial: {
+          fill: 'rgba(255,255,255,0.10)',
+          stroke: 'rgba(12,31,23,1)',
+          strokeWidth: 0.6,
+          fillOpacity: 1
+        },
+        hover: { fill: 'rgba(6,170,101,0.35)', fillOpacity: 1 }
+      },
+      markers: WORLD_MARKERS,
+      markerStyle: {
+        initial: {
+          fill: '#06AA65',
+          stroke: 'rgba(6,170,101,0.35)',
+          strokeWidth: 10,
+          r: 6
+        },
+        hover: { fill: '#4FD199', stroke: 'rgba(79,209,153,0.45)' }
+      }
+    });
+
+    // Attach persistent SVG labels next to each marker.
+    // jsvectormap renders markers as <circle class="jvm-marker"> in DOM order;
+    // we read their cx/cy and append <text> siblings with the country name.
+    function attachLabels() {
+      var svg = el.querySelector('svg');
+      if (!svg) return setTimeout(attachLabels, 60);
+      var circles = svg.querySelectorAll('.jvm-marker');
+      if (!circles.length) return setTimeout(attachLabels, 60);
+      var SVG_NS = 'http://www.w3.org/2000/svg';
+      // Remove any prior labels (in case of re-init)
+      svg.querySelectorAll('.jvm-marker-label').forEach(function (n) { n.remove(); });
+      circles.forEach(function (c, i) {
+        var d = WORLD_MARKERS[i]; if (!d) return;
+        var cx = parseFloat(c.getAttribute('cx'));
+        var cy = parseFloat(c.getAttribute('cy'));
+        if (isNaN(cx) || isNaN(cy)) return;
+        var t = document.createElementNS(SVG_NS, 'text');
+        t.setAttribute('class', 'jvm-marker-label');
+        t.setAttribute('x', cx + (d.dx || 14));
+        t.setAttribute('y', cy + (d.dy || 4));
+        t.setAttribute('text-anchor', d.anchor || 'start');
+        t.textContent = d.name;
+        svg.appendChild(t);
+      });
+    }
+    // Wait a tick for the marker circles to be placed by the lib.
+    setTimeout(attachLabels, 50);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initWorldMap);
+  } else {
+    initWorldMap();
+  }
+</script>
+
+</body>
+</html>

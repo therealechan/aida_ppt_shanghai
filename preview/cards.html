@@ -1,0 +1,34 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; background: var(--ink-50); font-family: var(--font-sans); }
+  .frame { padding: 28px; box-sizing: border-box; width: 700px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3); grid-column: span 2; margin-bottom: 0; }
+  .card { background: #fff; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-1); }
+  .card .media { aspect-ratio: 16/9; background: linear-gradient(135deg, var(--bean-500), var(--bean-700)); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 22px; letter-spacing: -0.02em; }
+  .card .media.alt { background: linear-gradient(135deg, var(--ink-800), var(--ink-900)); }
+  .card .body { padding: 16px 18px; }
+  .card h4 { font-size: 17px; margin: 0 0 6px; color: var(--fg-1); }
+  .card p { font-size: 13px; color: var(--fg-3); margin: 0 0 10px; line-height: 1.5; }
+  .feat { display: flex; flex-wrap: wrap; gap: 6px; }
+  .feat span { font-size: 11px; background: var(--bg-muted); color: var(--fg-2); padding: 3px 8px; border-radius: var(--radius-sm); }
+</style></head><body>
+<div class="frame">
+  <div class="label">Capability Cards (homepage pattern)</div>
+  <div class="card">
+    <div class="media">E-commerce Engine</div>
+    <div class="body">
+      <h4>Beansmile E-commerce Engine</h4>
+      <p>APP + mini-program + web, one stack. Deployed by NBA, Mead Johnson, Dettol, Durex.</p>
+      <div class="feat"><span>Modularity</span><span>Scalability</span><span>Compliance</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="media alt">AI Era</div>
+    <div class="body">
+      <h4>Pioneer of the AI era</h4>
+      <p>Smart tools and bespoke solutions — including our own LOOKyahAI.</p>
+      <div class="feat"><span>LLM integration</span><span>Agent workflows</span></div>
+    </div>
+  </div>
+</div>
+</body></html>

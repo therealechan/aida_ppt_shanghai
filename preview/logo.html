@@ -1,0 +1,40 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; background: var(--bg-page); }
+  .card { padding: 28px; box-sizing: border-box; width: 700px; }
+  .label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3); margin-bottom: 18px; }
+  .row { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+  .tile { padding: 16px; border: 1px solid var(--border-1); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; }
+  .tile.light { background: #fff; }
+  .tile.subtle { background: var(--bg-subtle); }
+  .tile.dark { background: var(--ink-900); border-color: var(--ink-800); }
+  .tile img { display: block; }
+  .mark-lg { height: 96px; width: 96px; }
+  .mark-md { height: 56px; width: 56px; }
+  .mark-sm { height: 32px; width: 32px; }
+  .lockup { display: flex; align-items: center; gap: 10px; }
+  .lockup span { font-weight: 700; font-size: 22px; letter-spacing: -0.01em; color: var(--fg-1); }
+  .dark .lockup span { color: #fff; }
+</style></head><body>
+<div class="card">
+  <div class="label">Logo Mark — Hex + Bean</div>
+  <div class="row">
+    <div class="tile light"><img src="../assets/logo-hex-bean.png" class="mark-lg" alt=""></div>
+    <div class="tile subtle"><img src="../assets/logo-hex-bean.png" class="mark-md" alt=""></div>
+    <div class="tile dark"><img src="../assets/logo-hex-bean-white.png" class="mark-md" alt=""></div>
+    <div class="tile light"><img src="../assets/logo-hex-bean-dark.png" class="mark-sm" alt=""></div>
+    <div class="tile light">
+      <div class="lockup">
+        <img src="../assets/logo-hex-bean.png" class="mark-sm" alt="">
+        <span>Beansmile</span>
+      </div>
+    </div>
+    <div class="tile dark">
+      <div class="lockup">
+        <img src="../assets/logo-hex-bean-white.png" class="mark-sm" alt="">
+        <span>Beansmile</span>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>

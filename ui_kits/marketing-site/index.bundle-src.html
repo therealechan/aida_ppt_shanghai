@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1280" />
+  <title>Beansmile — Deliver the best.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap">
+  <link rel="stylesheet" href="styles.css?v=3" />
+  <meta name="ext-resource-dependency" content="../../assets/logo-hex-bean.png" data-resource-id="logoHex" />
+  <meta name="ext-resource-dependency" content="../../assets/beansmile-wordmark-white.png" data-resource-id="wordmarkWhite" />
+  <template id="__bundler_thumbnail" data-bg-color="#06AA65">
+    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+      <rect width="1200" height="800" fill="#06AA65"/>
+      <g transform="translate(600 400)" fill="#0C1316">
+        <polygon points="-180,-104 0,-208 180,-104 180,104 0,208 -180,104"/>
+      </g>
+      <g transform="translate(600 400)" fill="#06AA65">
+        <polygon points="-120,-69 0,-138 120,-69 120,69 0,138 -120,69"/>
+      </g>
+      <circle cx="600" cy="400" r="60" fill="#0C1316"/>
+    </svg>
+  </template>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" src="Header.jsx"></script>
+  <script type="text/babel" src="Hero.jsx"></script>
+  <script type="text/babel" src="Clients.jsx"></script>
+  <script type="text/babel" src="Capabilities.jsx"></script>
+  <script type="text/babel" src="Team.jsx"></script>
+  <script type="text/babel" src="Contact.jsx"></script>
+
+  <script type="text/babel">
+    function App() {
+      const [active, setActive] = React.useState('Home');
+      const [scrolled, setScrolled] = React.useState(false);
+      const [openCap, setOpenCap] = React.useState(null);
+
+      React.useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 8);
+        window.addEventListener('scroll', onScroll);
+        return () => window.removeEventListener('scroll', onScroll);
+      }, []);
+
+      const handleNav = (l) => {
+        setActive(l);
+        const map = { Portfolio: 'work', Contact: 'contact' };
+        const id = map[l];
+        if (id) document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        else window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+
+      return (
+        <>
+          <BsHeader active={active} onNav={handleNav} scrolled={scrolled} />
+          <main>
+            <BsHero />
+            <BsClients />
+            <BsCapabilities onOpen={setOpenCap} />
+            <BsTeam />
+            <BsStats />
+            <BsContact />
+          </main>
+          <BsFooter />
+          {openCap && (
+            <div className="bs-modal" onClick={() => setOpenCap(null)}>
+              <div className="bs-modal__panel" onClick={(e) => e.stopPropagation()}>
+                <h3>{openCap}</h3>
+                <p>Detailed case study content would live here. Close to return to the marketing page.</p>
+                <button className="bs-btn bs-btn--primary bs-btn--sm" onClick={() => setOpenCap(null)}>Close</button>
+              </div>
+            </div>
+          )}
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

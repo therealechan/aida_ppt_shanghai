@@ -1,0 +1,253 @@
+/* ============================================================
+   Beansmile Design System — Colors & Type
+   ------------------------------------------------------------
+   Brand: Beansmile — a Guangzhou-based software studio
+   Primary green sampled from the official wordmark: #06AA65
+   Typography follows Beansmile's website: Inter for Latin text,
+   with the wordmark using a rounded geometric sans.
+   ============================================================ */
+
+/* ---- Webfonts: local Inter (variable) + Input Mono for code */
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/InterVariable.ttf') format('truetype-variations'),
+       url('fonts/InterVariable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/InterVariable-Italic.ttf') format('truetype-variations'),
+       url('fonts/InterVariable-Italic.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Input Mono';
+  src: url('fonts/Input-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Input Mono';
+  src: url('fonts/Input-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Input Mono';
+  src: url('fonts/Input-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Input Mono';
+  src: url('fonts/Input-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+/* Noto Sans SC still pulled from Google for CJK coverage */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Khand:wght@400;500;600;700&display=swap');
+
+:root {
+  /* ========== COLORS ========== */
+
+  /* Brand — "bean green" — sampled from the official logo */
+  --bean-50:  #E6F9F0;
+  --bean-100: #C6F0DB;
+  --bean-200: #8FE3BC;
+  --bean-300: #4FD199;
+  --bean-400: #1FBC7F;
+  --bean-500: #06AA65;   /* primary */
+  --bean-600: #039258;
+  --bean-700: #02774A;
+  --bean-800: #025E3B;
+  --bean-900: #01442B;
+
+  /* Neutrals — slightly warm, deep forest end */
+  --ink-0:    #FFFFFF;
+  --ink-50:   #F7F9F8;
+  --ink-100:  #EEF2F0;
+  --ink-200:  #DDE4E0;
+  --ink-300:  #BCC7C0;
+  --ink-400:  #8C9A92;
+  --ink-500:  #5E6C64;
+  --ink-600:  #3F4B45;
+  --ink-700:  #2A332E;
+  --ink-800:  #182018;
+  --ink-900:  #0C1316;   /* page on dark */
+
+  /* Accents (used sparingly) */
+  --accent-wechat:  #07C160;    /* WeChat green, for WeChat-adjacent copy */
+  --accent-amber:   #F5A524;    /* highlight / "new" chips */
+  --accent-sky:     #2D8CFF;    /* info / links-in-dark */
+  --accent-coral:   #F25F5C;    /* destructive */
+
+  /* Semantic surfaces (light theme) */
+  --bg-page:        var(--ink-0);
+  --bg-subtle:      var(--ink-50);
+  --bg-muted:       var(--ink-100);
+  --bg-inverse:     var(--ink-900);
+  --bg-brand:       var(--bean-500);
+  --bg-brand-soft:  var(--bean-50);
+
+  /* Foreground */
+  --fg-1:           var(--ink-900);  /* headings */
+  --fg-2:           var(--ink-700);  /* body */
+  --fg-3:           var(--ink-500);  /* secondary */
+  --fg-4:           var(--ink-400);  /* placeholder / meta */
+  --fg-on-brand:    var(--ink-0);
+  --fg-on-dark:     var(--ink-0);
+  --fg-brand:       var(--bean-600);
+
+  /* Borders */
+  --border-1:       var(--ink-200);
+  --border-2:       var(--ink-300);
+  --border-focus:   var(--bean-500);
+
+  /* Semantic status */
+  --success:        var(--bean-500);
+  --success-bg:     var(--bean-50);
+  --warning:        var(--accent-amber);
+  --warning-bg:     #FFF6E4;
+  --danger:         var(--accent-coral);
+  --danger-bg:      #FFECEB;
+  --info:           var(--accent-sky);
+  --info-bg:        #E6F1FF;
+
+  /* ========== TYPOGRAPHY ========== */
+
+  /* Font stacks */
+  --font-sans: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Inter', 'Noto Sans SC', sans-serif; /* same family, heavier weights */
+  --font-display-condensed: 'Khand', 'Inter', sans-serif; /* optional condensed display */
+  --font-mono: 'Input Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  /* Type scale — based on 16px root, tight headings, 1.5 body */
+  --fs-display: 64px;
+  --fs-h1: 48px;
+  --fs-h2: 36px;
+  --fs-h3: 28px;
+  --fs-h4: 22px;
+  --fs-h5: 18px;
+  --fs-body: 16px;
+  --fs-small: 14px;
+  --fs-xs: 12px;
+
+  --lh-tight: 1.1;
+  --lh-heading: 1.2;
+  --lh-snug: 1.35;
+  --lh-body: 1.55;
+  --lh-loose: 1.7;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-black: 800;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.04em;
+  --tracking-caps: 0.12em;
+
+  /* ========== SPACING & RADIUS ========== */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-pill: 999px;
+  --radius-hex-chip: 14px; /* matches logo hexagon feel */
+
+  /* ========== SHADOWS ========== */
+  --shadow-xs: 0 1px 2px rgba(12, 19, 22, 0.06);
+  --shadow-sm: 0 2px 6px rgba(12, 19, 22, 0.06), 0 1px 2px rgba(12, 19, 22, 0.04);
+  --shadow-md: 0 8px 20px rgba(12, 19, 22, 0.08), 0 2px 6px rgba(12, 19, 22, 0.05);
+  --shadow-lg: 0 18px 40px rgba(12, 19, 22, 0.10), 0 4px 12px rgba(12, 19, 22, 0.06);
+  --shadow-brand: 0 14px 30px rgba(6, 170, 101, 0.28);
+  --shadow-inner: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+
+  /* ========== MOTION ========== */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 360ms;
+}
+
+/* ============================================================
+   SEMANTIC / ELEMENT STYLES
+   ============================================================ */
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--fg-2);
+  background: var(--bg-page);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5 {
+  color: var(--fg-1);
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--lh-heading);
+  text-wrap: balance;
+  margin: 0;
+}
+
+.display   { font-size: var(--fs-display); font-weight: var(--fw-black); line-height: var(--lh-tight); letter-spacing: -0.03em; }
+h1, .h1    { font-size: var(--fs-h1); }
+h2, .h2    { font-size: var(--fs-h2); }
+h3, .h3    { font-size: var(--fs-h3); }
+h4, .h4    { font-size: var(--fs-h4); font-weight: var(--fw-semibold); }
+h5, .h5    { font-size: var(--fs-h5); font-weight: var(--fw-semibold); }
+
+p         { margin: 0 0 var(--space-4); line-height: var(--lh-body); text-wrap: pretty; }
+.lead     { font-size: var(--fs-h5); line-height: var(--lh-snug); color: var(--fg-2); }
+.small    { font-size: var(--fs-small); }
+.eyebrow  { font-size: var(--fs-xs); font-weight: var(--fw-semibold); letter-spacing: var(--tracking-caps); text-transform: uppercase; color: var(--fg-brand); }
+.meta     { font-size: var(--fs-small); color: var(--fg-3); }
+
+code, kbd, pre, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+code {
+  background: var(--bg-muted);
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+  color: var(--fg-1);
+}
+
+a {
+  color: var(--fg-brand);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+a:hover { color: var(--bean-700); text-decoration: underline; text-underline-offset: 3px; }
+
+hr { border: 0; border-top: 1px solid var(--border-1); margin: var(--space-6) 0; }
+
+::selection { background: var(--bean-200); color: var(--ink-900); }
