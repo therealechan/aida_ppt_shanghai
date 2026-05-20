@@ -16,5 +16,11 @@ debug/
 
 # npm
 node_modules/
-.wrangler/
 package-lock.json
+
+# wrangler / cloudflare local state
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
