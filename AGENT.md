@@ -1,7 +1,15 @@
-# AGENT.md — how AI agents edit this deck
+# AGENT.md — how AI agents (and the /edit UI) edit this deck
 
 This repo is the **source of truth** for the 爱搭云 GEO Deck. It is deployed to
 Cloudflare Pages automatically on every push to `main`.
+
+Two ways to edit:
+
+1. **`/edit` web UI** (password-gated, recommended for PMs) — open
+   `https://<project>.pages.dev/edit`, chat with OpenAI, save → auto-commits
+   to this repo. See "/edit feature" section below.
+2. **Direct git** (for engineers / coding agents) — clone, edit files
+   below, `git push`. CF Pages redeploys in ~30–60s.
 
 ## Source of truth
 
@@ -64,3 +72,49 @@ Before pushing:
 2. `git status` — make sure no `*-standalone.html` or `*.pptx` slipped in.
 3. Commit message references the slide / section changed.
 4. Push. Watch the CF Pages deployment finish before sharing the URL.
+
+---
+
+## /edit feature
+
+`edit.html` + `edit-app.js` (frontend) + `functions/` (CF Pages Functions,
+runs server-side) provide a password-gated chat editor. Architecture in
+[plan](../.claude/plans/review-repo-goofy-dongarra.md).
+
+### Required CF Pages environment variables
+
+Set in CF Dashboard → Workers & Pages → this project → Settings → Environment
+variables (both Production and Preview):
+
+- `EDIT_PASSWORD` — the shared password PMs use to unlock /edit
+- `AUTH_SECRET` — random hex string (`openssl rand -hex 32`) for HMAC cookie
+- `OPENAI_API_KEY` — `sk-...`
+- `GITHUB_TOKEN` — fine-grained PAT scoped to this repo, with
+  `Contents: Read & Write` + `Metadata: Read`
+- `GITHUB_REPO` — `therealechan/aida_ppt_shanghai`
+- `GITHUB_BRANCH` — `main`
+- `DEFAULT_MODEL` *(optional)* — defaults to `gpt-4o`
+
+### How saves work
+
+Every Save in /edit becomes a **single git commit** via the GitHub Git Data
+API, atomically updating `index.html` + `.image-slots.state.json` + any new
+`uploads/<hash>.<ext>` images. This avoids double CF Pages rebuilds.
+
+### Model selection
+
+UI defaults to `gpt-4o`. `o1` / `gpt-5` / etc. are pickable but slow — they
+will time out on CF Pages **Free** (30s CPU limit). Upgrade to **Paid** ($5/mo)
+to bump CPU to 5 minutes before using reasoning models.
+
+### What an editing agent should know
+
+- Don't bypass `/api/save` validation: it preserves `<image-slot>` ids and
+  rejects duplicate `data-screen-label`. If you're committing via git
+  directly instead of through /edit, the same invariants still apply or you'll
+  orphan image-slot state entries.
+- `pending_uploads` in the save body must each include the full base64 image
+  bytes (the upload endpoint does NOT write to git on its own — it only
+  validates and hashes). All bytes ride along with the save call.
+- AI output is structured JSON: `{ operations: [...], explanation: string }`
+  with `op ∈ {replace, insert_after, insert_before, delete}`.

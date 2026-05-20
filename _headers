@@ -18,3 +18,17 @@
   Cache-Control: public, max-age=300, must-revalidate
 /colors_and_type.css
   Cache-Control: public, max-age=300, must-revalidate
+
+# /edit UI and APIs: never cache
+/edit
+  Cache-Control: no-store
+/edit.html
+  Cache-Control: no-store
+/edit-app.js
+  Cache-Control: no-store
+/edit-app.css
+  Cache-Control: no-store
+/export-worker.js
+  Cache-Control: no-store
+/api/*
+  Cache-Control: no-store

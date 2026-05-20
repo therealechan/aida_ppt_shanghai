@@ -1,0 +1,16 @@
+{
+  "name": "aida-geo-deck",
+  "version": "0.1.0",
+  "private": true,
+  "description": "GEO Deck — Cloudflare Pages deployment with /edit AI editing UI.",
+  "scripts": {
+    "dev": "wrangler pages dev . --compatibility-date=2025-05-01",
+    "deploy": "echo 'Deploy happens via git push; CF Pages auto-builds.'"
+  },
+  "dependencies": {
+    "linkedom": "^0.18.5"
+  },
+  "devDependencies": {
+    "wrangler": "^3.80.0"
+  }
+}

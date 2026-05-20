@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEO Deck · Edit</title>
+<link rel="stylesheet" href="edit-app.css">
+</head>
+<body>
+
+<div id="gate" class="gate" hidden>
+  <form id="gate-form" class="gate-card">
+    <h1>GEO Deck Editor</h1>
+    <p class="muted">Enter password to continue.</p>
+    <input type="password" id="gate-pw" autocomplete="current-password" required>
+    <button type="submit">Unlock</button>
+    <div id="gate-err" class="err" hidden></div>
+  </form>
+</div>
+
+<div id="app" class="app" hidden>
+
+  <header class="topbar">
+    <div class="brand">GEO Deck <span class="muted">/ edit</span></div>
+    <div class="actions">
+      <label class="model-picker">
+        Model
+        <select id="model-select">
+          <option value="gpt-4o" selected>gpt-4o</option>
+          <option value="gpt-4o-mini">gpt-4o-mini</option>
+          <option value="o1">o1</option>
+          <option value="gpt-5">gpt-5</option>
+        </select>
+      </label>
+      <button id="export-btn" type="button" class="ghost">📦 Export standalone</button>
+      <button id="save-btn" type="button" class="primary" disabled>💾 Save & deploy</button>
+      <button id="logout-btn" type="button" class="ghost">Logout</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="slide-list">
+      <div class="sublabel">Slides</div>
+      <ul id="slides"></ul>
+    </aside>
+
+    <main class="preview-pane">
+      <div class="preview-bar">
+        <span id="preview-label" class="muted">No slide selected</span>
+        <span id="dirty-indicator" class="dirty" hidden>● unsaved</span>
+      </div>
+      <iframe id="preview-frame" title="slide preview" sandbox="allow-scripts allow-same-origin"></iframe>
+    </main>
+
+    <section class="chat-pane">
+      <div id="chat-log" class="chat-log"></div>
+      <form id="chat-form" class="chat-form">
+        <div id="attachments" class="attachments"></div>
+        <textarea id="chat-input" placeholder="告诉 AI 怎么改…例如「把标题改成 XX」「在第 5 页后新增客户案例页」「删掉第 13 页」" rows="3"></textarea>
+        <div class="chat-actions">
+          <label class="upload-btn">
+            📎 image
+            <input type="file" id="image-input" accept="image/*" multiple hidden>
+          </label>
+          <span id="chat-status" class="muted"></span>
+          <button type="submit" class="primary">Send</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+</div>
+
+<script type="module" src="edit-app.js"></script>
+</body>
+</html>

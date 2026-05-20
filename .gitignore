@@ -13,3 +13,8 @@ Thumbs.db
 # dev artifacts
 *.pptx
 debug/
+
+# npm
+node_modules/
+.wrangler/
+package-lock.json
