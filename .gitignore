@@ -13,3 +13,10 @@ Thumbs.db
 # dev artifacts
 *.pptx
 debug/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
