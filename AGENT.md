@@ -60,9 +60,9 @@ to the Cloudflare-hosted URL get.
 
 ## Deploy
 
-Push to `main` → Cloudflare Pages auto-builds (no build step; pure static)
-→ live in ~30–60s at `https://<project>.pages.dev`. PRs get a preview
-deployment at a unique URL.
+Hosted on **Vercel**. Push to `main` → Vercel auto-builds (no build step; static
+files + Edge functions in `api/`) → live in ~30–60s at `https://<project>.vercel.app`.
+PRs get a preview deployment at a unique URL.
 
 ## Agent checklist
 
@@ -71,31 +71,31 @@ Before pushing:
 1. Open `index.html` in a browser locally — no console errors, all images render.
 2. `git status` — make sure no `*-standalone.html` or `*.pptx` slipped in.
 3. Commit message references the slide / section changed.
-4. Push. Watch the CF Pages deployment finish before sharing the URL.
+4. Push. Watch the Vercel deployment finish before sharing the URL.
 
 ---
 
 ## /edit feature
 
-`edit.html` + `edit-app.js` (frontend) + `worker.js` (Cloudflare Worker main
-entry, routes `/api/*` to handlers in `functions/`) provide a password-gated
-chat editor. Architecture in
+`edit.html` + `edit-app.js` (frontend) + `api/*.js` (Vercel Edge functions)
+provide a password-gated chat editor. Architecture in
 [plan](../.claude/plans/review-repo-goofy-dongarra.md).
 
-**Deployment mode**: this is a **Cloudflare Worker with Static Assets** (not
-classic Pages Functions). `wrangler.jsonc` declares:
-- `main: "./worker.js"` — server-side request handler
-- `assets.directory: "."` + `.assetsignore` — everything else served as static
-- `assets.run_worker_first: ["/api/*"]` — `/api/*` always hits the Worker first
+**Deployment mode**: **Vercel** static hosting + **Edge functions**.
+- `api/*.js` — thin Edge entry points (`export const config = { runtime: "edge" }`).
+  Each injects `process.env`, runs `requireAuth` (except `api/auth.js`), then
+  delegates to the shared handler in `functions/api/*.js`.
+- `functions/api/*` + `functions/lib/*` — the actual request logic (Web-standard
+  `Request`/`Response`, reused verbatim from the original implementation).
+- `vercel.json` — `cleanUrls: true` (so `/edit` serves `edit.html`) + cache headers.
 
-When you add new server code, import it from `worker.js`. When you add new
-static files (images, HTML, CSS), they're auto-deployed unless listed in
-`.assetsignore`.
+When you add a new endpoint, create `api/<name>.js` (Edge entry) and put the
+logic in `functions/api/<name>.js`. Static files (images, HTML, CSS) auto-deploy.
 
-### Required CF Pages environment variables
+### Required Vercel environment variables
 
-Set in CF Dashboard → Workers & Pages → this project → Settings → Environment
-variables (both Production and Preview):
+Set in Vercel Dashboard → this project → Settings → Environment Variables
+(Production + Preview):
 
 - `EDIT_PASSWORD` — the shared password PMs use to unlock /edit
 - `AUTH_SECRET` — random hex string (`openssl rand -hex 32`) for HMAC cookie
@@ -110,13 +110,14 @@ variables (both Production and Preview):
 
 Every Save in /edit becomes a **single git commit** via the GitHub Git Data
 API, atomically updating `index.html` + `.image-slots.state.json` + any new
-`uploads/<hash>.<ext>` images. This avoids double CF Pages rebuilds.
+`uploads/<hash>.<ext>` images. This avoids double Vercel rebuilds.
 
 ### Model selection
 
-UI defaults to `gpt-4o`. `o1` / `gpt-5` / etc. are pickable but slow — they
-will time out on CF Pages **Free** (30s CPU limit). Upgrade to **Paid** ($5/mo)
-to bump CPU to 5 minutes before using reasoning models.
+UI defaults to `gpt-4o`. `o1` / `gpt-5` / etc. are pickable but slow. On Vercel
+**Hobby**, Edge functions must respond within ~25s — fine for `gpt-4o` editing a
+single slide, risky for reasoning models on large slides. Upgrade to **Pro** for
+longer-running functions before relying on `o1`/`gpt-5`.
 
 ### What an editing agent should know
 

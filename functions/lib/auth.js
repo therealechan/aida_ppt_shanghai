@@ -58,3 +58,32 @@ export function constantTimeEqual(a, b) {
   for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
   return diff === 0;
 }
+
+// Returns null if the request carries a valid edit_session cookie, otherwise a
+// 401/500 Response that the caller should return directly.
+export async function requireAuth(request, env) {
+  const cookieHeader = request.headers.get("Cookie") || "";
+  let token = null;
+  for (const part of cookieHeader.split(";")) {
+    const [k, ...rest] = part.trim().split("=");
+    if (k === "edit_session") { token = rest.join("="); break; }
+  }
+  if (!token) return unauthorized();
+  if (!env.AUTH_SECRET) return serverError();
+  const ok = await verifyCookie(token, env.AUTH_SECRET);
+  return ok ? null : unauthorized();
+}
+
+function unauthorized() {
+  return new Response(JSON.stringify({ error: "unauthorized" }), {
+    status: 401,
+    headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
+  });
+}
+
+function serverError() {
+  return new Response(JSON.stringify({ error: "server_misconfigured" }), {
+    status: 500,
+    headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
+  });
+}

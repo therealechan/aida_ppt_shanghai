@@ -1,0 +1,42 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "headers": [
+    {
+      "source": "/fonts/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/uploads/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/index.html",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=60, must-revalidate" }]
+    },
+    {
+      "source": "/.image-slots.state.json",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=60, must-revalidate" }]
+    },
+    {
+      "source": "/(deck-stage|image-slot).js",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=300, must-revalidate" }]
+    },
+    {
+      "source": "/colors_and_type.css",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=300, must-revalidate" }]
+    },
+    {
+      "source": "/(edit|edit.html|edit-app.js|edit-app.css|export-worker.js)",
+      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
+    }
+  ]
+}
