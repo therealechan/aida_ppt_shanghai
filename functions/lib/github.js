@@ -34,7 +34,10 @@ export async function getFile(env, path) {
     "GET",
     `/contents/${encodePath(path)}?ref=${encodeURIComponent(env.GITHUB_BRANCH)}`
   );
-  const content = atob(data.content.replace(/\n/g, ""));
+  const bin = atob(data.content.replace(/\n/g, ""));
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  const content = new TextDecoder("utf-8").decode(bytes);
   return { sha: data.sha, content, encoding: data.encoding };
 }
 
