@@ -92,34 +92,9 @@ button.ghost:hover { background: var(--ink-3); }
 .layout {
   flex: 1; min-height: 0;
   display: grid;
-  grid-template-columns: 220px 1fr 380px;
+  grid-template-columns: 1fr 380px;
   gap: 1px; background: var(--line);
 }
-
-/* ───── Slide list ───── */
-.slide-list {
-  background: var(--ink-2); overflow-y: auto;
-  padding: 12px;
-}
-.sublabel {
-  text-transform: uppercase; font-size: 11px;
-  letter-spacing: 0.1em; color: var(--muted);
-  margin-bottom: 8px;
-}
-.slide-list ul { list-style: none; padding: 0; margin: 0; }
-.slide-list li {
-  padding: 8px 10px; border-radius: 6px; cursor: pointer;
-  font-size: 13px; color: var(--text);
-  margin-bottom: 2px;
-}
-.slide-list li:hover { background: var(--ink-3); }
-.slide-list li.active {
-  background: var(--bean-700); color: white;
-}
-.slide-list li.deleted {
-  text-decoration: line-through; opacity: 0.5;
-}
-.slide-list li.new::before { content: "+ "; color: var(--bean-500); font-weight: 700; }
 
 /* ───── Preview ───── */
 .preview-pane {

@@ -1,5 +1,5 @@
 // /edit frontend.
-// Single-file ES module, no framework. Handles auth gate, slide list,
+// Single-file ES module, no framework. Handles auth gate,
 // iframe srcdoc preview, OpenAI chat (SSE), image upload (client-side hash,
 // remembered for next save), save (single git commit), and standalone export
 // (via web worker).
@@ -72,56 +72,50 @@ async function bootEditor() {
   state.fullHtml = await htmlRes.text();
   state.workingHtml = state.fullHtml;
 
-  renderSlideList();
   $("#chat-form").addEventListener("submit", onChatSubmit);
   $("#image-input").addEventListener("change", onImagePicked);
   $("#save-btn").addEventListener("click", onSave);
   $("#export-btn").addEventListener("click", onExport);
   $("#logout-btn").addEventListener("click", onLogout);
 
-  // pick first slide
-  if (state.slides.length) selectSlide(state.slides[0].label);
-}
-
-function renderSlideList() {
-  const ul = $("#slides");
-  ul.innerHTML = "";
-  for (const s of state.slides) {
-    const li = document.createElement("li");
-    li.textContent = s.label;
-    if (s.label === state.activeLabel) li.classList.add("active");
-    if (s.deleted) li.classList.add("deleted");
-    if (s.inserted) li.classList.add("new");
-    li.addEventListener("click", () => selectSlide(s.label));
-    ul.appendChild(li);
-  }
-}
-
-function selectSlide(label) {
-  state.activeLabel = label;
-  $("#preview-label").textContent = label;
-  renderSlideList();
+  // The AI's edit target follows the deck's own navigation (see refreshPreview).
+  // Seed it with the first slide so the very first message has a focus.
+  if (state.slides.length) setActiveLabel(state.slides[0].label);
   refreshPreview();
 }
 
-// Render working HTML in iframe via srcdoc, scroll to the active slide.
+function setActiveLabel(label) {
+  state.activeLabel = label;
+  $("#preview-label").textContent = label;
+}
+
+// Render working HTML in iframe via srcdoc. The editor has no slide list of its
+// own — the deck's built-in navigation IS the selector. We listen to the deck's
+// `slidechange` event so the AI's edit target follows whatever slide is on screen.
 function refreshPreview() {
   const iframe = $("#preview-frame");
   const html = state.workingHtml || state.fullHtml;
-  // The deck uses location.hash for slide navigation; we can inject a small
-  // post-load nav script. For simplicity we just write the HTML and let the
-  // user scroll / use the deck's own navigation.
   iframe.srcdoc = html;
-  // After load, ask the deck to jump to the active slide if possible.
   iframe.onload = () => {
     try {
-      const stage = iframe.contentDocument.querySelector("deck-stage");
-      const sections = iframe.contentDocument.querySelectorAll("body > section, deck-stage > section");
+      const doc = iframe.contentDocument;
+      const stage = doc.querySelector("deck-stage");
+      const sections = doc.querySelectorAll("body > section, deck-stage > section");
+
+      // Deck navigation → editor selection.
+      if (stage) {
+        stage.addEventListener("slidechange", (e) => {
+          const label = e.detail?.slide?.getAttribute("data-screen-label");
+          if (label) setActiveLabel(label);
+        });
+      }
+
+      // Restore the previously-active slide after a reload (e.g. after staging ops).
       const idx = Array.from(sections).findIndex(
         (s) => s.getAttribute("data-screen-label") === state.activeLabel
       );
-      if (idx >= 0 && stage && typeof stage.gotoSlide === "function") {
-        stage.gotoSlide(idx);
+      if (idx >= 0 && stage && typeof stage.goTo === "function") {
+        stage.goTo(idx);
       } else if (idx >= 0) {
         sections[idx].scrollIntoView({ behavior: "instant", block: "start" });
       }
@@ -341,7 +335,6 @@ function applyPendingToWorking() {
   }
 
   state.workingHtml = "<!DOCTYPE html>\n" + doc.documentElement.outerHTML;
-  renderSlideList();
 }
 
 function cssEscape(s) {
@@ -512,7 +505,6 @@ async function refreshSlideListFromServer() {
     if (!res.ok) return;
     const data = await res.json();
     state.slides = data.slides;
-    renderSlideList();
   } catch {}
 }
 
